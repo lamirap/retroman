@@ -16,4 +16,4 @@ Getting Started
 License
 -------
 
-Licensed under an [Apache-2](../LICENSE) license.
+Licensed under an [MIT](./LICENSE) license.
