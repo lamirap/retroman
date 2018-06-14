@@ -5,15 +5,15 @@ var myAPP = angular.module('retroman', [ 'ngRoute' ]);
 myAPP.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
         when('/home', {
-            templateUrl: 'home.html',
+            templateUrl: 'html/home.html',
             controller: 'HomeController'
         }).
         when('/login', {
-            templateUrl: 'login.html',
+            templateUrl: 'html/login.html',
             controller: 'LoginController'
         }).
         when('/admin', {
-            templateUrl: 'admin.html',
+            templateUrl: 'html/admin.html',
             controller: 'AdminController'
         }).
         otherwise({
