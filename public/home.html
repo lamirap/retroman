@@ -1,0 +1,107 @@
+
+
+<div class="mdl-layout__content mdl-color--grey-100">
+  <!-- Show the add post form -->
+  <section class="mdl-grid content" id="add-post" ng-show="showAddPost">
+    
+    <div class="mdl-cell mdl-cell--12-col mdl-grid">      
+      <!-- Card containing the inputs to add a new messages -->
+      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet">
+        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+          <h2 class="mdl-card__title-text">New Post</h2>
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <form id="message-form" action="#">
+            <input class="mdl-textfield__input" type="hidden" id="new-post-type" ng-model="typeInput">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <textarea class="mdl-textfield__input" rows="3" id="new-post-message" ng-model="messageInput" placeholder="Post message ..."></textarea>
+            </div>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="formSubmit()">
+              Add post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- Show a list of recent posts -->
+  <section class="mdl-grid content" id="recent-posts-list" ng-show="showRecentPosts">
+    
+    <div class="mdl-cell--4-col">
+      <div class="addpost">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="0" ng-click="addPostClicked(0)">
+          <i class="material-icons">add_box</i>
+        </button>
+        <h2 class="add" id="0">Start</h2>
+      </div>
+      <div ng-data="postList"></div>
+      <ul class="posts-container">
+        <li ng-repeat="item in postList" ng-if="item.type == 0" class="post post-{{item.postId}}" >
+          <div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>
+          <div class="username mdl-color-text--black"> {{item.username}} </div>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn"  ng-click="deletePostClicked(item)">
+            <i class="material-icons">highlight_off</i>
+          </button>
+          <div class="stars">
+            <div class="not-starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == false"> star_border </div>
+            <div class="starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == true"> star </div>
+            <div class="star-count"> {{item.starCount}} </div>
+          </div>
+          <div class="message-text text"> {{item.text}}</div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="mdl-cell--4-col">
+      <div class="addpost">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="1" ng-click="addPostClicked(1)">
+          <i class="material-icons">add_box</i>
+        </button>
+        <h2 class="add" id="1">Stop</h2>
+      </div>
+      <ul class="posts-container">
+        <li ng-repeat="item in postList" ng-if="item.type == 1" class="post post-{{item.postId}}" >
+          <div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>
+          <div class="username mdl-color-text--black"> {{item.username}} </div>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn" ng-click="deletePostClicked(item)">
+            <i class="material-icons">highlight_off</i>
+          </button>
+          <div class="stars">
+            <div class="not-starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == false"> star_border </div>
+            <div class="starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == true"> star </div>
+            <div class="star-count"> {{item.starCount}} </div>
+          </div>
+          <div class="message-text text"> {{item.text}}</div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="mdl-cell--4-col">
+      <div class="addpost">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="2" ng-click="addPostClicked(2)">
+          <i class="material-icons">add_box</i>
+        </button>
+        <h2 class="add" id="2">Continue</h2>
+      </div>
+      <ul class="posts-container">
+        <li ng-repeat="item in postList" ng-if="item.type == 2" class="post post-{{item.postId}}" >
+          <div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>
+          <div class="username mdl-color-text--black"> {{item.username}} </div>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn" ng-click="deletePostClicked(item)">
+            <i class="material-icons">highlight_off</i>
+          </button>
+          <div class="stars">
+            <div class="not-starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == false"> star_border </div>
+            <div class="starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == true"> star </div>
+            <div class="star-count"> {{item.starCount}} </div>
+          </div>
+          <div class="message-text text"> {{item.text}}</div>
+        </li>
+      </ul>
+    </div>
+    
+  </section>
+
+</div>

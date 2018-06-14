@@ -1,0 +1,292 @@
+'use strict';
+
+angular.module('retroman')
+  .controller('HomeController', function ($scope, $location, $timeout) {
+      
+    var currentUID;
+    var post = {}
+    
+    // Shortcuts to DOM Elements.
+    $scope.splashPage = angular.element('#page-splash');
+    $scope.recentPostsSection = angular.element('#recent-posts-list');
+    $scope.listeningFirebaseRefs = [];
+
+    $scope.showAddPost = false;
+    $scope.showRecentPosts = true;
+    
+    $scope.postList = [];
+    
+
+    /**
+     * Starts listening for new posts and populates posts lists.
+     */
+    $scope.startDatabaseQueries = function() {
+      // [START recent_posts_query]
+      var recentPostsRef = firebase.database().ref('posts').orderByChild('date').limitToLast(100);
+      // [END recent_posts_query]
+
+      // Fetching and displaying all posts of each sections.
+      recentPostsRef.on('child_added', function(data) {
+        //console.log('Child added');
+
+        var uid = firebase.auth().currentUser.uid;
+        var post = {}
+        post.username = data.val().author || 'Anonymous';
+        post.avatarURL = data.val().authorPic || '/images/silhouette.jpg';
+        post.starred = data.val().starred;
+        post.starCount = data.val().starCount;
+        post.text = data.val().body;
+        post.type = data.val().type;
+        post.postId = data.key;
+        post.authorId = data.val().uid;
+        post.date = data.val().date;
+        
+        
+        var starCountRef = firebase.database().ref('posts/' + post.postId + '/starCount');
+        starCountRef.on('value', function(snapshot) {
+          post.starCount = snapshot.val();
+        });
+        
+        var starredStatusRef = firebase.database().ref('posts/' + post.postId + '/stars/' + uid)
+        starredStatusRef.on('value', function(snapshot) {
+            post.starred = false;
+            if (snapshot.val()) { 
+              post.starred = true;
+            }
+        });
+
+        $scope.listeningFirebaseRefs.push(starCountRef);
+        $scope.listeningFirebaseRefs.push(starredStatusRef);
+
+        // Bind starring action.
+        $scope.onStarClicked = function(post) {
+          console.log('Star clicked');
+          var globalPostRef = firebase.database().ref('/posts/' + post.postId);
+          var userPostRef = firebase.database().ref('/user-posts/' + post.authorId + '/' + post.postId);
+          toggleStar(globalPostRef, uid);
+          toggleStar(userPostRef, uid);
+        };
+        
+        $timeout(function() {
+          $scope.postList.unshift(post);
+        }, 0);
+        //console.log(post);
+        
+        $(".post-" + post.postId).hide().delay().fadeIn(2000);      
+        //console.log(".post-" + post.postId);
+        //console.log($(".post-" + post.postId).html());
+      });
+      
+      recentPostsRef.on('child_changed', function(data) {	
+        //console.log('Child changed');
+        var postIndex = $scope.postList.findIndex(x => x.postId == data.key);
+        
+        //console.log(postIndex);
+        
+        $timeout(function() {        
+          $scope.postList[postIndex].username = data.val().author || 'Anonymous';
+          $scope.postList[postIndex].text = data.val().body;
+          //$scope.postList[postIndex].starred = data.val().starred;
+          $scope.postList[postIndex].starCount = data.val().starCount;
+        }, 0);
+      });
+      
+      recentPostsRef.on('child_removed', function(data) {
+        //console.log('Child removed');
+        for(var i = 0; i < $scope.postList.length; i += 1) {
+          if($scope.postList[i].postId === data.key) {
+            $timeout(function() {        
+              $scope.postList.splice(i, 1);
+            }, 0);
+            return;
+          }
+        }
+      });
+      // Keep track of all Firebase refs we are listening to.
+      $scope.listeningFirebaseRefs.push(recentPostsRef);
+    }
+
+    /**
+     * Saves a new post to the Firebase DB.
+     */
+    // [START write_fan_out]
+    function writeNewPost(uid, username, picture, body, type) {
+      // A post entry.
+      var postData = {
+        author: username,
+        uid: uid,
+        body: body,
+        type: type,
+        starCount: 0,
+        authorPic: picture,
+        date: Date.now()
+      };
+
+      // Get a key for a new Post.
+      var newPostKey = firebase.database().ref().child('posts').push().key;
+
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      var updates = {};
+      updates['/posts/' + newPostKey] = postData;
+      updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+      return firebase.database().ref().update(updates);
+    }
+    // [END write_fan_out]
+
+    /**
+     * Star/unstar post.
+     */
+    // [START post_stars_transaction]
+    function toggleStar(postRef, uid) {
+      postRef.transaction(function(post) {
+        //console.log(post);
+        if (post) {
+          if (post.stars && post.stars[uid]) {
+            post.starCount--;
+            post.stars[uid] = null;
+          } else {
+            post.starCount++;
+            if (!post.stars) {
+              post.stars = {};
+            }
+            post.stars[uid] = true;
+          }
+        }
+        return post;
+      });
+    }
+    // [END post_stars_transaction]
+
+    /**
+     * Writes the user's data to the database.
+     */
+    // [START basic_write]
+    function writeUserData(userId, name, email, imageUrl) {
+      //console.log('Adding user');
+      firebase.database().ref('users/' + userId).set({
+        username: name,
+        email: email,
+        profile_picture : imageUrl,
+        userId : userId
+      });
+    }
+    // [END basic_write]
+
+    /**
+     * Cleanups the UI and removes all Firebase listeners.
+     */
+    function cleanupUi() {
+      // Remove all previously displayed posts.
+      
+      //console.log('UI cleanup');
+      $scope.postList = []
+      
+      // Stop all currently listening Firebase listeners.
+      $scope.listeningFirebaseRefs.forEach(function(ref) {
+        ref.off();
+      });
+      $scope.listeningFirebaseRefs = [];
+    }
+
+    /**
+     * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
+     */
+    function onAuthStateChanged(user) {
+      
+      //console.log(user);
+      
+      // We ignore token refresh events.
+      if (user && currentUID === user.uid) {
+        return;
+      }
+
+      //console.log('Auth state changed');
+      
+      cleanupUi();
+      if (user) {
+        currentUID = user.uid;
+        $scope.splashPage.hide();
+        writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+        $scope.startDatabaseQueries();
+      } else {
+        // Set currentUID to null.
+        currentUID = null;
+        // Display the splash page where you can sign-in.
+        //console.log('Redirecting to login');
+        $location.path("/login");
+        $scope.$apply();
+      }
+    }
+
+    /**
+     * Creates a new post for the current user.
+     */
+    function newPostForCurrentUser(text, type) {
+      // [START single_value_read]
+      var userId = firebase.auth().currentUser.uid;
+      //console.log(userId);
+      return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+        // [START_EXCLUDE]
+        return writeNewPost(firebase.auth().currentUser.uid, username,
+            firebase.auth().currentUser.photoURL,
+            text, type);
+        // [END_EXCLUDE]
+      });
+      // [END single_value_read]
+    }
+
+     // Saves message on form submit.
+     $scope.formSubmit = function() {
+       var text = $scope.messageInput;
+       var type = $scope.typeInput;
+       
+       //console.log('Post added ' + text);
+       //console.log(type);
+       
+       if (text) {
+         newPostForCurrentUser(text, type).then(function() {
+           $scope.showAddPost = false;
+           $scope.showRecentPosts = true;
+         });
+         $scope.messageInput = '';
+       }
+     };
+     
+     $scope.addPostClicked = function(id) {
+       //console.log('Post  adding');
+       
+       $scope.showAddPost = true;
+       $scope.showRecentPosts = false;
+       
+       $scope.messageInput = '';
+       $scope.typeInput = id;
+     };
+
+     $scope.deletePostClicked = function(post) {
+       //console.log('Deleting post');
+       
+       firebase.database().ref('/posts/' + post.postId).remove();
+       var allUsers = firebase.database().ref('/users');
+       
+       allUsers.once('value', function(snap) { 
+         
+         snap.forEach(function(childSnap) {
+           //console.log(childSnap.val());
+           firebase.database().ref('/user-posts/' + childSnap.key + '/' + post.postId).remove();
+         });
+      });
+     };
+     
+     $scope.init = function() {
+       //console.log("Initialized HomeController");
+                                
+       // Listen for auth state changes
+      firebase.auth().onAuthStateChanged(onAuthStateChanged);             
+     }
+     
+     $scope.init();
+  });
+  
+  
