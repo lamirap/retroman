@@ -13,8 +13,10 @@ angular.module('retroman')
       console.log($scope.retroId);
       
       if (!$scope.retroId) {
-        $location.path("/not-found");
-        $scope.$apply();
+        $timeout(function() {
+          $scope.showRetroSelector = true;
+          $scope.showRecentPosts = false;
+        }, 0);
       }
     });
     
@@ -287,6 +289,15 @@ angular.module('retroman')
        $scope.typeInput = id;
      };
 
+     $scope.retroIdSubmit = function() {
+       
+       $timeout(function() {
+         $scope.showRetroSelector = false;
+         $scope.showRecentPosts = true;
+         $location.path("/home/" + $scope.retroIdInput);
+       }, 0);
+     };
+     
      $scope.deletePostClicked = function(post) {
        //console.log('Deleting post');
        
