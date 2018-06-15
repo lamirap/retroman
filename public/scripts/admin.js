@@ -29,18 +29,18 @@ angular.module('retroman')
         
     $scope.createRetro = function() {
       console.log('Create retro');
-      saveNewRetro(firebase.auth().currentUser.uid, $scope.retroId, $scope.retroName);
+      saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName);
       $scope.showAddRetro = false;
       $scope.showRetroList = true;
     }
     
-    function saveNewRetro(userId, retroId, name) {
+    function saveNewRetro(userId, name) {
       // Get a key for a new Post.
       var newRetroKey = firebase.database().ref().child('/retros/' + userId + '/').push().key;
       var retro = {};
 
       retro.name = name;
-      retro.retroId = retroId;
+      retro.retroId = Math.random().toString(36).substr(2, 6);
       retro.uid = userId;
       
       $scope.retroList.push(retro);

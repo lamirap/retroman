@@ -11,7 +11,7 @@
         <ul>
           <li ng-repeat="retro in retroList">
             <h2> {{ retro.name }} </h2>
-            <a ng-href='/#/home/{{retro.name}}'> {{ retro.name }} </a>
+            <a ng-href='/#/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
           </li>
         </ul>
       </div>
@@ -28,7 +28,6 @@
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <form>
-            <input class="mdl-textfield__input" ng-model="retroId">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <textarea class="mdl-textfield__input"  ng-model="retroName" placeholder="Retro Name ..."></textarea>
             </div>
