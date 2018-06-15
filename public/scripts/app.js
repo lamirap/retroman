@@ -8,6 +8,10 @@ myAPP.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'html/home.html',
             controller: 'HomeController'
         }).
+        when('/home/:retroId', {
+            templateUrl: 'html/home.html',
+            controller: 'HomeController'
+        }).
         when('/login', {
             templateUrl: 'html/login.html',
             controller: 'LoginController'
@@ -16,8 +20,11 @@ myAPP.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'html/admin.html',
             controller: 'AdminController'
         }).
+        when('/not-found', {
+            templateUrl: 'html/404.html'
+        }).
         otherwise({
-            redirectTo: '/login'
+            redirectTo: '/not-found'
         });
 }]);
 

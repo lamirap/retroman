@@ -23,11 +23,11 @@ angular.module('retroman')
 
           if (user) {
             //console.log('Redirecting to home');
-            $location.path( "/home" );
+            $location.path( "/admin" );
             $scope.$apply();
           } else {
             //console.log('Redirecting to login');
-            $location.path("/login");
+            $location.path("/login"); 
             $scope.$apply();
           }
         }

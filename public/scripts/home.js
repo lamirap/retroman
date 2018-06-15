@@ -1,8 +1,24 @@
 'use strict';
 
 angular.module('retroman')
-  .controller('HomeController', function ($scope, $location, $timeout) {
+  .controller('HomeController', function ($scope, $location, $timeout, $routeParams) {
+  
+    $scope.retroId = 0;
+    
+    $scope.$on('$routeChangeSuccess', function() {
+      $scope.retroId = $routeParams.retroId;
+
+      //console.log($routeParams);
       
+      console.log($scope.retroId);
+      
+      if (!$scope.retroId) {
+        $location.path("/not-found");
+        $scope.$apply();
+      }
+    });
+    
+  
     var currentUID;
     var post = {}
     
@@ -22,7 +38,7 @@ angular.module('retroman')
      */
     $scope.startDatabaseQueries = function() {
       // [START recent_posts_query]
-      var recentPostsRef = firebase.database().ref('posts').orderByChild('date').limitToLast(100);
+      var recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
       // [END recent_posts_query]
 
       // Fetching and displaying all posts of each sections.
@@ -42,12 +58,12 @@ angular.module('retroman')
         post.date = data.val().date;
         
         
-        var starCountRef = firebase.database().ref('posts/' + post.postId + '/starCount');
+        var starCountRef = firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId + '/starCount');
         starCountRef.on('value', function(snapshot) {
           post.starCount = snapshot.val();
         });
         
-        var starredStatusRef = firebase.database().ref('posts/' + post.postId + '/stars/' + uid)
+        var starredStatusRef = firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId + '/stars/' + uid)
         starredStatusRef.on('value', function(snapshot) {
             post.starred = false;
             if (snapshot.val()) { 
@@ -61,8 +77,8 @@ angular.module('retroman')
         // Bind starring action.
         $scope.onStarClicked = function(post) {
           console.log('Star clicked');
-          var globalPostRef = firebase.database().ref('/posts/' + post.postId);
-          var userPostRef = firebase.database().ref('/user-posts/' + post.authorId + '/' + post.postId);
+          var globalPostRef = firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId);
+          var userPostRef = firebase.database().ref('/user-posts/' + $scope.retroId +'/' + post.authorId + '/' + post.postId);
           toggleStar(globalPostRef, uid);
           toggleStar(userPostRef, uid);
         };
@@ -122,14 +138,18 @@ angular.module('retroman')
         date: Date.now()
       };
 
+      console.log(postData);
+      
       // Get a key for a new Post.
-      var newPostKey = firebase.database().ref().child('posts').push().key;
+      var newPostKey = firebase.database().ref().child('/posts/' + $scope.retroId +'/').push().key;
 
       // Write the new post's data simultaneously in the posts list and the user's post list.
       var updates = {};
-      updates['/posts/' + newPostKey] = postData;
-      updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+      updates['/posts/' + $scope.retroId +'/' + newPostKey] = postData;
+      updates['/user-posts/' + $scope.retroId +'/' + uid + '/' + newPostKey] = postData;
 
+      console.log(updates);
+      
       return firebase.database().ref().update(updates);
     }
     // [END write_fan_out]
@@ -223,18 +243,18 @@ angular.module('retroman')
      * Creates a new post for the current user.
      */
     function newPostForCurrentUser(text, type) {
-      // [START single_value_read]
       var userId = firebase.auth().currentUser.uid;
-      //console.log(userId);
-      return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+      console.log(userId);
+      console.log("New post");
+      console.log('users/' + userId);
+      
+      return firebase.database().ref('users/' + userId).once('value').then(function(snapshot) {
+        console.log(snapshot.val());
         var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-        // [START_EXCLUDE]
         return writeNewPost(firebase.auth().currentUser.uid, username,
             firebase.auth().currentUser.photoURL,
             text, type);
-        // [END_EXCLUDE]
       });
-      // [END single_value_read]
     }
 
      // Saves message on form submit.
@@ -242,20 +262,23 @@ angular.module('retroman')
        var text = $scope.messageInput;
        var type = $scope.typeInput;
        
-       //console.log('Post added ' + text);
+       console.log('Post added ' + text);
        //console.log(type);
        
        if (text) {
          newPostForCurrentUser(text, type).then(function() {
-           $scope.showAddPost = false;
-           $scope.showRecentPosts = true;
+           console.log('Post add complete');
+           $timeout(function() {
+             $scope.showAddPost = false;
+             $scope.showRecentPosts = true;
+           });
          });
          $scope.messageInput = '';
        }
      };
      
      $scope.addPostClicked = function(id) {
-       //console.log('Post  adding');
+       console.log('Post  adding');
        
        $scope.showAddPost = true;
        $scope.showRecentPosts = false;
@@ -267,26 +290,19 @@ angular.module('retroman')
      $scope.deletePostClicked = function(post) {
        //console.log('Deleting post');
        
-       firebase.database().ref('/posts/' + post.postId).remove();
+       firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId).remove();
        var allUsers = firebase.database().ref('/users');
        
        allUsers.once('value', function(snap) { 
          
          snap.forEach(function(childSnap) {
            //console.log(childSnap.val());
-           firebase.database().ref('/user-posts/' + childSnap.key + '/' + post.postId).remove();
+           firebase.database().ref('/user-posts/' + $scope.retroId +'/' + childSnap.key + '/' + post.postId).remove();
          });
       });
      };
      
-     $scope.init = function() {
-       //console.log("Initialized HomeController");
-                                
-       // Listen for auth state changes
-      firebase.auth().onAuthStateChanged(onAuthStateChanged);             
-     }
-     
-     $scope.init();
+     firebase.auth().onAuthStateChanged(onAuthStateChanged);             
   });
   
   

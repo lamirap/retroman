@@ -1,19 +1,81 @@
 angular.module('retroman')
- .controller('AdminController', function ($scope) {
-    $scope.message = 'This is the admin page.';
-    $scope.items = []
+ .controller('AdminController', function ($scope, $timeout) {
+    $scope.retroList = []
+    var currentUID;
+
+    $scope.getRetros = function() {
+      var userId = firebase.auth().currentUser.uid;
+      console.log(userId);
+      
+      firebase.database().ref('/retros/' + userId + '/').once('value').then(function(snapshot) {
+        snapshot.forEach(function(childSnap) {
+          var retro = {};
+          
+          retro.name = childSnap.val().name;
+          retro.retroId = childSnap.val().retroId;
+          
+          $timeout(function() {
+            $scope.retroList.unshift(retro);
+          }, 0);          
+        });
+      });
+    }
+
+    $scope.addRetroClicked = function() {
+      console.log('Add retro clicked');
+      $scope.showAddRetro = true;
+      $scope.showRetroList = false;
+    }
+        
+    $scope.createRetro = function() {
+      console.log('Create retro');
+      saveNewRetro(firebase.auth().currentUser.uid, $scope.retroId, $scope.retroName);
+      $scope.showAddRetro = false;
+      $scope.showRetroList = true;
+    }
+    
+    function saveNewRetro(userId, retroId, name) {
+      // Get a key for a new Post.
+      var newRetroKey = firebase.database().ref().child('/retros/' + userId + '/').push().key;
+      var retro = {};
+
+      retro.name = name;
+      retro.retroId = retroId;
+      retro.uid = userId;
+      
+      $scope.retroList.push(retro);
+      
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      var updates = {};
+      updates['/retros/' + userId + '/' + newRetroKey] = retro;
+
+      return firebase.database().ref().update(updates);
+    }
+  
     
     $scope.init = function() {
-        console.log("Initialized AdminController");
-        
-        var item1 = {};
-        var item2 = {};
-        item1.name = "Hello";
-        item2.name = "Hello2";
-        
-        $scope.items.push(item1);
-        $scope.items.push(item2);
+      console.log("Initialized AdminController");
+      $scope.showAddRetro = false;
+      $scope.showRetroList = true;
     }
     
     $scope.init();
+    
+    function onAuthStateChanged(user) {
+      // We ignore token refresh events.
+      if (user && currentUID === user.uid) {
+        return;
+      }
+      if (user) {
+        currentUID = user.uid;
+        $scope.getRetros();
+      } else {
+        // Set currentUID to null.
+        currentUID = null;
+        $location.path("/login");
+        $scope.$apply();
+      }
+    }
+
+    firebase.auth().onAuthStateChanged(onAuthStateChanged);  
  });
