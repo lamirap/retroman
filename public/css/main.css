@@ -319,3 +319,51 @@ h3 {
     text-align: center;
     margin: 0px 0px 0px 20px;
 }
+
+.retro-container {
+  overflow-y: scroll;
+  padding: 5px;
+  margin: 5px;
+  background: #1088c1;
+  border-radius: 20px;
+  list-style: none;
+}
+
+.retro {
+  border-radius: 20px;
+  padding: 10px;
+  margin: 5px;
+  background: #f5eeee;  
+}
+
+.retro ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.retro-name {
+  display: block;
+  line-height: 38px;
+  vertical-align: top;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.retro-add {
+  height: 30px;
+  min-width: 30px;
+  width: 30px;  
+  display: inline;
+  right: -10px;
+  vertical-align: middle;
+}
+
+.retro-title {
+  display: inline-block;
+  font-size: 20px;
+  margin-left: 20px;
+  vertical-align: middle;
+}

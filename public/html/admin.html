@@ -1,20 +1,24 @@
 <div class="mdl-layout__content mdl-color--grey-100">
-  <h1> My Retros List</h1>
 
-  <section class="mdl-grid content" id="recent-posts-list" ng-show="showRetroList">
+  <section class="mdl-grid content" ng-show="showRetroList">
+    <div class="mdl-layout-spacer"></div>
+  
+    <div class="mdl-cell--4-col addretro">
+      <div class="retro-title"> My Retros List</div>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect retro-add" ng-click="addRetroClicked()">
+        <i class="material-icons">add_box</i>
+      </button>
+      
+      <ul class="retro-container">
+        <li ng-repeat="retro in retroList" class="retro">
+          <div class="retro-name mdl-color-text--black"> {{retro.name}} </div>
+          <a ng-href='/#/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
+        </li>
+      </ul>
+    </div>
     
-    <div class="mdl-cell--4-col">
-      <div class="addretro">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect" ng-click="addRetroClicked()">
-          <i class="material-icons">add_box</i>
-        </button>
-        <ul>
-          <li ng-repeat="retro in retroList">
-            <h2> {{ retro.name }} </h2>
-            <a ng-href='/#/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
-          </li>
-        </ul>
-      </div>
+    <div class="mdl-layout-spacer"></div>
+
   </section>
 
   <!-- Show the add post form -->
