@@ -7,11 +7,9 @@ a {
   text-decoration: underline;
   color: #039BE5;
 }
-.content {
-  max-width: 1024px;
-}
 .mdl-card {
   display: block;
+  width: 100%;
 }
 .mdl-textfield {
   width: 100%;
@@ -228,6 +226,7 @@ a {
   margin: 5px 5px 0px 5px;
   background: #1088c1;
   border-radius: 20px;
+  
 }
 
 .addpost h2 {

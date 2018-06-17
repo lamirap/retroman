@@ -1,9 +1,9 @@
 <div class="mdl-layout__content mdl-color--grey-100">
 
-  <section class="mdl-grid content" ng-show="showRetroList">
+  <section class="mdl-grid" ng-show="showRetroList">
     <div class="mdl-layout-spacer"></div>
     
-    <div class="mdl-cell--6-col addretro">
+    <div class="mdl-cell--6-col">
       <div class="retro-title"> My Retros List</div>
       <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect retro-add" ng-click="addRetroClicked()">
         <i class="material-icons">add_box</i>
@@ -22,11 +22,12 @@
   </section>
 
   <!-- Show the add post form -->
-  <section class="mdl-grid content" ng-show="showAddRetro">
+  <section class="mdl-grid" ng-show="showAddRetro">
+    <div class="mdl-layout-spacer"></div>
     
-    <div class="mdl-cell mdl-cell--12-col mdl-grid">      
+    <div class="mdl-cell mdl-cell--6-col">      
       <!-- Card containing the inputs to add a new messages -->
-      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet">
+      <div class="mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
           <h2 class="mdl-card__title-text">New Retro</h2>
         </div>
@@ -43,5 +44,6 @@
       </div>
     </div>
     
+    <div class="mdl-layout-spacer"></div>
   </section>
 </div>
