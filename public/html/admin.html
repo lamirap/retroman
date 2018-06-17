@@ -2,29 +2,17 @@
 
   <section class="mdl-grid content" ng-show="showRetroList">
     <div class="mdl-layout-spacer"></div>
-  
-    <!-- Large Tooltip -->
-  <div id="tt2" class="icon material-icons">print</div>
-  <div class="mdl-tooltip mdl-tooltip--large" for="tt2">
-  Print
-  </div>
-  
-    <div class="mdl-cell--4-col addretro">
+    
+    <div class="mdl-cell--6-col addretro">
       <div class="retro-title"> My Retros List</div>
-      <div class="retro-add-btn">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect retro-add" ng-click="addRetroClicked()">
-          <i class="material-icons">add_box</i>
-        </button>
-      </div>
-      
-      <div class="mdl-tooltip mdl-tooltip--large" for="retro-add-btn">
-        Click to create new retros
-      </div>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect retro-add" ng-click="addRetroClicked()">
+        <i class="material-icons">add_box</i>
+      </button>
 
       <ul class="retro-container">
         <li ng-repeat="retro in retroList" class="retro">
           <div class="retro-name mdl-color-text--black"> {{retro.name}} </div>
-          <a ng-href='/#/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
+          <a class="retro-link" ng-href='/#/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
         </li>
       </ul>
     </div>

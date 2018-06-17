@@ -348,9 +348,8 @@ a {
 }
 
 .retro-name {
-  display: block;
-  line-height: 38px;
-  vertical-align: top;
+  display: inline-block;
+  vertical-align: middle;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -370,5 +369,10 @@ a {
   display: inline-block;
   font-size: 20px;
   margin-left: 20px;
+  vertical-align: middle;
+}
+
+.retro-link {
+  float: right;
   vertical-align: middle;
 }
