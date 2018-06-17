@@ -16,12 +16,6 @@ a {
 .mdl-card {
     display: block;
 }
-h3 {
-    background: url('/images/logo.png') no-repeat;
-    background-size: 40px;
-    padding-left: 50px;
-    margin: 10px;
-}
 .mdl-textfield {
     width: 100%;
 }
@@ -43,14 +37,25 @@ h3 {
 /* Header */
 
 .logo {
-    font-family: 'Amaranth', sans-serif;
+  font-family: 'Amaranth', sans-serif;
+  text-decoration: none;
 }
+
 .logo .material-icons {
     top: 4px;
     font-size: 32px;
     margin-right: -2px;
     position: relative;
 }
+
+.logo h3 {
+    background: url('/images/logo.png') no-repeat;
+    background-size: 40px;
+    padding-left: 50px;
+    margin: 10px;
+    color: white;
+}
+
 .header .mdl-layout__header-row {
     max-width: 1024px;
     width: 100%;
