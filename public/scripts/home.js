@@ -128,7 +128,7 @@ angular.module('retroman')
      * Saves a new post to the Firebase DB.
      */
     // [START write_fan_out]
-    function writeNewPost(uid, username, picture, body, type) {
+    function writeNewPost(uid, username, picture, body, type, retroId) {
       // A post entry.
       var postData = {
         author: username,
@@ -143,12 +143,12 @@ angular.module('retroman')
       console.log(postData);
       
       // Get a key for a new Post.
-      var newPostKey = firebase.database().ref().child('/posts/' + $scope.retroId +'/').push().key;
+      var newPostKey = firebase.database().ref().child('/posts/' + retroId +'/').push().key;
 
       // Write the new post's data simultaneously in the posts list and the user's post list.
       var updates = {};
-      updates['/posts/' + $scope.retroId +'/' + newPostKey] = postData;
-      updates['/user-posts/' + $scope.retroId +'/' + uid + '/' + newPostKey] = postData;
+      updates['/posts/' + retroId +'/' + newPostKey] = postData;
+      updates['/user-posts/' + retroId +'/' + uid + '/' + newPostKey] = postData;
 
       console.log(updates);
       
@@ -244,7 +244,7 @@ angular.module('retroman')
     /**
      * Creates a new post for the current user.
      */
-    function newPostForCurrentUser(text, type) {
+    function newPostForCurrentUser(text, type, retroId) {
       var userId = firebase.auth().currentUser.uid;
       console.log(userId);
       console.log("New post");
@@ -255,7 +255,7 @@ angular.module('retroman')
         var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
         return writeNewPost(firebase.auth().currentUser.uid, username,
             firebase.auth().currentUser.photoURL,
-            text, type);
+            text, type, retroId);
       });
     }
 
@@ -268,7 +268,7 @@ angular.module('retroman')
        //console.log(type);
        
        if (text) {
-         newPostForCurrentUser(text, type).then(function() {
+         newPostForCurrentUser(text, type, $scope.retroId).then(function() {
            console.log('Post add complete');
            $timeout(function() {
              $scope.showAddPost = false;
@@ -298,17 +298,17 @@ angular.module('retroman')
        }, 0);
      };
      
-     $scope.deletePostClicked = function(post) {
+     $scope.deletePostClicked = function(post, retroId) {
        //console.log('Deleting post');
        
-       firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId).remove();
+       firebase.database().ref('/posts/' + retroId +'/' + post.postId).remove();
        var allUsers = firebase.database().ref('/users');
        
        allUsers.once('value', function(snap) { 
          
          snap.forEach(function(childSnap) {
            //console.log(childSnap.val());
-           firebase.database().ref('/user-posts/' + $scope.retroId +'/' + childSnap.key + '/' + post.postId).remove();
+           firebase.database().ref('/user-posts/' + retroId +'/' + childSnap.key + '/' + post.postId).remove();
          });
       });
      };

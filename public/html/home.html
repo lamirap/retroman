@@ -64,7 +64,7 @@
         <li ng-repeat="item in postList" ng-if="item.type == 0" class="post post-{{item.postId}}" >
           <div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>
           <div class="username mdl-color-text--black"> {{item.username}} </div>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn"  ng-click="deletePostClicked(item)">
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn"  ng-click="deletePostClicked(item, retroId)">
             <i class="material-icons">highlight_off</i>
           </button>
           <div class="stars">
@@ -88,7 +88,7 @@
         <li ng-repeat="item in postList" ng-if="item.type == 1" class="post post-{{item.postId}}" >
           <div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>
           <div class="username mdl-color-text--black"> {{item.username}} </div>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn" ng-click="deletePostClicked(item)">
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn" ng-click="deletePostClicked(item, retroId)">
             <i class="material-icons">highlight_off</i>
           </button>
           <div class="stars">
@@ -112,7 +112,7 @@
         <li ng-repeat="item in postList" ng-if="item.type == 2" class="post post-{{item.postId}}" >
           <div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>
           <div class="username mdl-color-text--black"> {{item.username}} </div>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn" ng-click="deletePostClicked(item)">
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn" ng-click="deletePostClicked(item, retroId)">
             <i class="material-icons">highlight_off</i>
           </button>
           <div class="stars">
