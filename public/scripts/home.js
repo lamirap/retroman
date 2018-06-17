@@ -184,13 +184,14 @@ angular.module('retroman')
      * Writes the user's data to the database.
      */
     // [START basic_write]
-    function writeUserData(userId, name, email, imageUrl) {
+    function writeUserData(userId, name, email, imageUrl, isAnonymous) {
       //console.log('Adding user');
       firebase.database().ref('users/' + userId).set({
         username: name,
         email: email,
         profile_picture : imageUrl,
-        userId : userId
+        userId : userId,
+        isAnonymous : isAnonymous
       });
     }
     // [END basic_write]
@@ -229,7 +230,7 @@ angular.module('retroman')
       if (user) {
         currentUID = user.uid;
         $scope.splashPage.hide();
-        writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+        writeUserData(user.uid, user.displayName, user.email, user.photoURL, user.isAnonymous);
         $scope.startDatabaseQueries();
       } else {
         // Set currentUID to null.
