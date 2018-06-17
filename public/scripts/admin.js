@@ -1,5 +1,5 @@
 angular.module('retroman')
- .controller('AdminController', function ($scope, $timeout) {
+ .controller('AdminController', function ($scope, $timeout, $location) {
     $scope.retroList = []
     var currentUID;
 
