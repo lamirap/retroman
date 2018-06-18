@@ -1,5 +1,5 @@
 angular.module('retroman')
- .controller('AdminController', function ($scope, $timeout, $location) {
+ .controller('AdminController', function ($scope, $timeout, $location, $mdDialog) {
     $scope.retroList = []
     var currentUID;
 
@@ -29,9 +29,29 @@ angular.module('retroman')
         
     $scope.createRetro = function() {
       console.log('Create retro');
-      saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName);
+      var retroId = saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName);
       $scope.showAddRetro = false;
       $scope.showRetroList = true;
+      
+      console.log('Showing dialog');
+      
+      $mdDialog.show(
+        $mdDialog.confirm()
+          .clickOutsideToClose(true)
+          .title('Retro created successfully')
+          .textContent('New retroId - ' + retroId)
+          .ariaLabel('Success')
+          .ok('Got it!')
+          .cancel('Go to new retro')
+      ).then(function() {
+        console.log('Back to admin screen');
+      }, function() {
+        console.log('Go to retro page' + "/#!/home/" + retroId);
+        
+        $timeout(function() {
+          $location.path('/home/' + retroId);
+        }, 0);      
+      });
     }
     
     function saveNewRetro(userId, name) {
@@ -49,7 +69,9 @@ angular.module('retroman')
       var updates = {};
       updates['/retros/' + userId + '/' + newRetroKey] = retro;
 
-      return firebase.database().ref().update(updates);
+      firebase.database().ref().update(updates);
+      
+      return retro.retroId;
     }
   
     
@@ -72,8 +94,10 @@ angular.module('retroman')
       } else {
         // Set currentUID to null.
         currentUID = null;
-        $location.path("/login");
-        $scope.$apply();
+        
+        $timeout(function() {
+          $location.path("/login");
+        }, 0);      
       }
     }
 
