@@ -13,6 +13,11 @@
         <li ng-repeat="retro in retroList" class="retro">
           <div class="retro-name mdl-color-text--black"> {{retro.name}} </div>
           <a class="retro-link" ng-href='/#!/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
+          
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect retro-deletebtn" ng-click="deleteRetroClicked(retro)">
+            <i class="material-icons">highlight_off</i>
+          </button>
+
         </li>
       </ul>
     </div>

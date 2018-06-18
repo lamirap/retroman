@@ -13,6 +13,7 @@ angular.module('retroman')
           
           retro.name = childSnap.val().name;
           retro.retroId = childSnap.val().retroId;
+          retro.retroKey = childSnap.key;
           
           $timeout(function() {
             $scope.retroList.unshift(retro);
@@ -74,6 +75,34 @@ angular.module('retroman')
       return retro.retroId;
     }
   
+    $scope.deleteRetroClicked = function(retro) {
+      console.log('Deleting retro');
+      var userId = firebase.auth().currentUser.uid;
+      firebase.database().ref('/retros/' + userId + '/' + retro.retroKey).remove();
+      //console.log('/retros/' + userId + '/' + retro.retroKey);
+      
+      for(var i = 0; i < $scope.retroList.length; i += 1) {
+        if($scope.retroList[i].retroId === retro.retroId) {
+          $timeout(function() {        
+            $scope.retroList.splice(i, 1);
+          }, 0);
+          break;
+        }
+      }
+      
+      //Remove posts from deleted retro also
+      
+      firebase.database().ref('/posts/' + retro.retroId + '/').remove();
+      var allUsers = firebase.database().ref('/users');
+      
+      allUsers.once('value', function(snap) { 
+        
+        snap.forEach(function(childSnap) {
+          //console.log(childSnap.val());
+          firebase.database().ref('/user-posts/' + retro.retroId + '/').remove();
+        });
+      });
+    }
     
     $scope.init = function() {
       console.log("Initialized AdminController");
