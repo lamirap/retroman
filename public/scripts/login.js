@@ -22,8 +22,11 @@ angular.module('retroman')
           //console.log(user);
 
           if (user) {
-            //console.log('Redirecting to home');
-            $location.path( "/admin" );
+            if (user.isAnonymous) {
+              $location.path( "/home" );              
+            } else {
+              $location.path( "/admin" );
+            }
             $scope.$apply();
           } else {
             //console.log('Redirecting to login');

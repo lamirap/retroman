@@ -1,7 +1,7 @@
 angular.module('retroman')
  .controller('AdminController', function ($scope, $timeout, $location, $mdDialog) {
-    $scope.retroList = []
-    var currentUID;
+    $scope.retroList = [];
+    $scope.currentUID = null;
 
     $scope.getRetros = function() {
       var userId = firebase.auth().currentUser.uid;
@@ -24,6 +24,11 @@ angular.module('retroman')
 
     $scope.addRetroClicked = function() {
       console.log('Add retro clicked');
+      if (firebase.auth().currentUser.isAnonymous) {
+        console.log('Anonymous cannot add retro');
+        return;
+      }
+      
       $scope.showAddRetro = true;
       $scope.showRetroList = false;
     }
@@ -116,17 +121,37 @@ angular.module('retroman')
     
     $scope.init();
     
-    function onAuthStateChanged(user) {
+    $scope.onAuthStateChanged = function(user) {
+      
       // We ignore token refresh events.
-      if (user && currentUID === user.uid) {
+      if (user && $scope.currentUID === user.uid) {
         return;
       }
+      
       if (user) {
-        currentUID = user.uid;
-        $scope.getRetros();
+        console.log($scope.currentUID, user.uid);
+        
+        $scope.currentUID = user.uid;
+        
+        if (user.isAnonymous) {
+          $mdDialog.show(
+            $mdDialog.alert()
+              .clickOutsideToClose(true)
+              .title('Sign-in')
+              .textContent('Login to create new retro')
+              .ariaLabel('Login')
+              .ok('Got it!')
+          ).then(function() {
+            $timeout(function() {
+              $location.path("/home");
+            }, 0);      
+          });
+        } else {
+          $scope.getRetros();
+        }
       } else {
         // Set currentUID to null.
-        currentUID = null;
+        $scope.currentUID = null;
         
         $timeout(function() {
           $location.path("/login");
@@ -134,5 +159,5 @@ angular.module('retroman')
       }
     }
 
-    firebase.auth().onAuthStateChanged(onAuthStateChanged);  
+    firebase.auth().onAuthStateChanged($scope.onAuthStateChanged);  
  });
