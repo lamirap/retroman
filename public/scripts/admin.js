@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('retroman')
  .controller('AdminController', function ($scope, $timeout, $location, $mdDialog) {
     $scope.retroList = [];
@@ -129,8 +131,6 @@ angular.module('retroman')
       }
       
       if (user) {
-        console.log($scope.currentUID, user.uid);
-        
         $scope.currentUID = user.uid;
         
         if (user.isAnonymous) {

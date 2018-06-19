@@ -1,5 +1,7 @@
+'use strict';
+
 angular.module('retroman')
- .controller('LoginController', function ($scope, $location) {
+ .controller('LoginController', function ($scope, $rootScope, $location) {
         $scope.signInClicked = function() {
           var provider = new firebase.auth.GoogleAuthProvider();
           firebase.auth().signInWithPopup(provider);
@@ -22,6 +24,8 @@ angular.module('retroman')
           //console.log(user);
 
           if (user) {
+            $rootScope.showAdmin = !user.isAnonymous;
+            
             if (user.isAnonymous) {
               $location.path( "/home" );              
             } else {

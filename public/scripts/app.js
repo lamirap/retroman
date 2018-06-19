@@ -28,6 +28,10 @@ myAPP.config(['$routeProvider', function ($routeProvider) {
         });
 }]);
 
+myAPP.run(function($rootScope) {
+    $rootScope.showAdmin = false;
+});
+
 // Bind Sign out button.
 function signOutClicked() {
   console.log('Signout clicked');
