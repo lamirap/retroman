@@ -56,18 +56,6 @@ a {
   margin: auto;
   position: relative;
 }
-@media screen and (max-width: 840px) {
-  .header .mdl-layout__header-row.titlebar {
-    height: 56px;
-  }
-  .titlebar h3 {
-    font-size: 24px;
-  }
-  .titlebar h3 .material-icons {
-    top: 2.5px;
-    font-size: 23px;
-  }
-}
 @media screen and (max-width: 479px) {
   .mdl-grid {
     padding: 0;
@@ -301,3 +289,11 @@ a {
   display: block;
 }
 
+
+.retro-header {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 32px;
+  position: relative;
+  padding-left: 20px;
+  margin: 5px;
+}

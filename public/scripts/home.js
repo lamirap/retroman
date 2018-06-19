@@ -34,7 +34,10 @@ angular.module('retroman')
               }, 0);
             });
           } else {
-            console.log('Retro found');
+            console.log('Retro found' + snapshot.val().name);
+            $timeout(function() {
+              $scope.retroName = snapshot.val().name;
+            }, 0);
           }
         }, function(error) {
           // The Promise was rejected.

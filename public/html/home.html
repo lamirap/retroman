@@ -59,7 +59,9 @@
 
   <!-- Show a list of recent posts -->
   <section class="mdl-grid" id="recent-posts-list" ng-show="showRecentPosts">
-    
+    <div class="mdl-cell mdl-cell--12-col">
+      <div class="retro-header"> {{retroName}} </div>
+    </div>
     <div class="mdl-cell mdl-cell--4-col">
       <div class="addpost">
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="0" ng-click="addPostClicked(0)">
