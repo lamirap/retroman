@@ -17,30 +17,31 @@ angular.module('retroman')
           $scope.showRetroSelector = true;
           $scope.showRecentPosts = false;
         }, 0);
+      } else {
+        firebase.database().ref('/retros/' + $scope.retroId).once('value').then(function(snapshot) {
+          if (!snapshot.exists()) {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(true)
+                .title('Retro not found')
+                .textContent('No such retro with retroId - ' + $scope.retroId)
+                .ariaLabel('Not found')
+                .ok('Got it!')
+            ).then(function() {
+              $timeout(function() {
+                $scope.showRetroSelector = true;
+                $scope.showRecentPosts = false;
+              }, 0);
+            });
+          } else {
+            console.log('Retro found');
+          }
+        }, function(error) {
+          // The Promise was rejected.
+          console.error(error);
+        });
       }
       
-      firebase.database().ref('/retros/' + $scope.retroId).once('value').then(function(snapshot) {
-        if (!snapshot.exists()) {
-          $mdDialog.show(
-            $mdDialog.alert()
-              .clickOutsideToClose(true)
-              .title('Retro not found')
-              .textContent('No such retro with retroId - ' + $scope.retroId)
-              .ariaLabel('Not found')
-              .ok('Got it!')
-          ).then(function() {
-            $timeout(function() {
-              $scope.showRetroSelector = true;
-              $scope.showRecentPosts = false;
-            }, 0);
-          });
-        } else {
-          console.log('Retro found');
-        }
-      }, function(error) {
-        // The Promise was rejected.
-        console.error(error);
-      });
     });
     
   
