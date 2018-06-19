@@ -7,7 +7,7 @@ angular.module('retroman')
       var userId = firebase.auth().currentUser.uid;
       console.log(userId);
       
-      firebase.database().ref('/retros/' + userId + '/').once('value').then(function(snapshot) {
+      firebase.database().ref('/user-retros/' + userId + '/').once('value').then(function(snapshot) {
         snapshot.forEach(function(childSnap) {
           var retro = {};
           
@@ -57,18 +57,20 @@ angular.module('retroman')
     
     function saveNewRetro(userId, name) {
       // Get a key for a new Post.
-      var newRetroKey = firebase.database().ref().child('/retros/' + userId + '/').push().key;
       var retro = {};
 
       retro.name = name;
       retro.retroId = Math.random().toString(36).substr(2, 6);
       retro.uid = userId;
       
+      retro.newRetroKey = firebase.database().ref().child('/retros/' + retro.retroId + '/').push().key;
+      
       $scope.retroList.push(retro);
       
       // Write the new post's data simultaneously in the posts list and the user's post list.
       var updates = {};
-      updates['/retros/' + userId + '/' + newRetroKey] = retro;
+      updates['/retros/' + retro.retroId] = retro;
+      updates['/user-retros/' + userId + '/' + retro.newRetroKey] = retro;
 
       firebase.database().ref().update(updates);
       
@@ -78,7 +80,7 @@ angular.module('retroman')
     $scope.deleteRetroClicked = function(retro) {
       console.log('Deleting retro');
       var userId = firebase.auth().currentUser.uid;
-      firebase.database().ref('/retros/' + userId + '/' + retro.retroKey).remove();
+      firebase.database().ref('/retros/' + retro.retroId).remove();
       //console.log('/retros/' + userId + '/' + retro.retroKey);
       
       for(var i = 0; i < $scope.retroList.length; i += 1) {
@@ -89,6 +91,8 @@ angular.module('retroman')
           break;
         }
       }
+
+      firebase.database().ref('/user-retros/' + userId + '/' + retro.retroKey).remove();
       
       //Remove posts from deleted retro also
       
