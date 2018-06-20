@@ -124,7 +124,7 @@ angular.module('retroman')
     $scope.init();
     
     $scope.onAuthStateChanged = function(user) {
-      
+      console.log('Admin auth state changed');
       // We ignore token refresh events.
       if (user && $scope.currentUID === user.uid) {
         return;
@@ -157,7 +157,13 @@ angular.module('retroman')
           $location.path("/login");
         }, 0);      
       }
-    }
+    }    
 
-    firebase.auth().onAuthStateChanged($scope.onAuthStateChanged);  
+    var unsubscribe = firebase.auth().onAuthStateChanged($scope.onAuthStateChanged);  
+
+    $scope.$on("$destroy", function handler() {
+      console.log("Destructor called");
+      unsubscribe();
+        // destruction code here
+    });
  });

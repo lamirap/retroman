@@ -16,6 +16,10 @@ myAPP.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'html/login.html',
             controller: 'LoginController'
         }).
+        when('/logout', {
+            template: '',
+            controller: 'LogoutController'
+        }).
         when('/admin', {
             templateUrl: 'html/admin.html',
             controller: 'AdminController'

@@ -341,7 +341,11 @@ angular.module('retroman')
       });
      };
      
-     firebase.auth().onAuthStateChanged(onAuthStateChanged);             
+     var unsubscribe = firebase.auth().onAuthStateChanged(onAuthStateChanged);  
+
+     $scope.$on("$destroy", function handler() {
+       unsubscribe();
+     });
   });
   
   
