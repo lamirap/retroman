@@ -162,8 +162,6 @@ angular.module('retroman')
     var unsubscribe = firebase.auth().onAuthStateChanged($scope.onAuthStateChanged);  
 
     $scope.$on("$destroy", function handler() {
-      console.log("Destructor called");
       unsubscribe();
-        // destruction code here
     });
  });

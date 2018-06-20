@@ -46,8 +46,13 @@ angular.module('retroman')
         $scope.init = function() {
             console.log("Initialized LoginController");
             // Listen for auth state changes
-            firebase.auth().onAuthStateChanged($scope.onAuthStateChangedLogin);
         }
         
         $scope.init();
+        
+        var unsubscribe = firebase.auth().onAuthStateChanged($scope.onAuthStateChangedLogin);
+        
+        $scope.$on("$destroy", function handler() {
+          unsubscribe();
+        });
  });
