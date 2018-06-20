@@ -64,10 +64,10 @@
     <header class="header mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
       <div class="mdl-layout__header-row">
         <a class="logo" ng-href="#!/home"><h3>retroman</h3></a>
-        <button id="sign-out-button" onclick="signOutClicked()" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">account_circle</i> Sign out</button>
         <a href="#!/admin" ng-show="showAdmin">Admin</a>
-        <a href="#!/logout" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect">Logout</a>
+        <a href="#!/logout" id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">account_circle</i> Sign out</button>
+        </a>
       </div>
 
     </header>
