@@ -8,20 +8,20 @@ angular.module('retroman')
         }
                 
         $scope.anonSignInClicked = function() {
-          console.log('Anon sign-in clicked');
+          console.debug('Anon sign-in clicked');
           firebase.auth().signInAnonymously().catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             
-            console.log(errorMessage);
+            console.debug(errorMessage);
             // ...
           });
         }
 
         $scope.onAuthStateChangedLogin = function(user) { 
-          console.log('Auth state changed login');
-          //console.log(user);
+          console.debug('Auth state changed login');
+          //console.debug(user);
 
           if (user) {
             $rootScope.showAdmin = !user.isAnonymous;
@@ -36,7 +36,7 @@ angular.module('retroman')
               }, 0); 
             }
           } else {
-            //console.log('Redirecting to login');
+            //console.debug('Redirecting to login');
             $timeout(function() {
               $location.path("/login"); 
             }, 0); 
@@ -44,7 +44,7 @@ angular.module('retroman')
         }
         
         $scope.init = function() {
-            console.log("Initialized LoginController");
+            console.debug("Initialized LoginController");
             // Listen for auth state changes
         }
         

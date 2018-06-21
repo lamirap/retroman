@@ -8,9 +8,9 @@ angular.module('retroman')
     $scope.$on('$routeChangeSuccess', function() {
       $scope.retroId = $routeParams.retroId;
 
-      //console.log($routeParams);
+      //console.debug($routeParams);
       
-      console.log($scope.retroId);
+      console.debug($scope.retroId);
       
       if (!$scope.retroId) {
         $timeout(function() {
@@ -34,7 +34,7 @@ angular.module('retroman')
               }, 0);
             });
           } else {
-            console.log('Retro found' + snapshot.val().name);
+            console.debug('Retro found' + snapshot.val().name);
             $timeout(function() {
               $scope.retroName = snapshot.val().name;
             }, 0);
@@ -72,7 +72,7 @@ angular.module('retroman')
 
       // Fetching and displaying all posts of each sections.
       recentPostsRef.on('child_added', function(data) {
-        //console.log('Child added');
+        //console.debug('Child added');
 
         var uid = firebase.auth().currentUser.uid;
         var post = {}
@@ -105,7 +105,7 @@ angular.module('retroman')
 
         // Bind starring action.
         $scope.onStarClicked = function(post) {
-          console.log('Star clicked');
+          console.debug('Star clicked');
           var globalPostRef = firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId);
           var userPostRef = firebase.database().ref('/user-posts/' + $scope.retroId +'/' + post.authorId + '/' + post.postId);
           toggleStar(globalPostRef, uid);
@@ -115,18 +115,18 @@ angular.module('retroman')
         $timeout(function() {
           $scope.postList.unshift(post);
         }, 0);
-        //console.log(post);
+        //console.debug(post);
         
         $(".post-" + post.postId).hide().delay().fadeIn(2000);      
-        //console.log(".post-" + post.postId);
-        //console.log($(".post-" + post.postId).html());
+        //console.debug(".post-" + post.postId);
+        //console.debug($(".post-" + post.postId).html());
       });
       
       recentPostsRef.on('child_changed', function(data) {	
-        //console.log('Child changed');
+        //console.debug('Child changed');
         var postIndex = $scope.postList.findIndex(x => x.postId == data.key);
         
-        //console.log(postIndex);
+        //console.debug(postIndex);
         
         $timeout(function() {        
           $scope.postList[postIndex].username = data.val().author || 'Anonymous';
@@ -137,7 +137,7 @@ angular.module('retroman')
       });
       
       recentPostsRef.on('child_removed', function(data) {
-        //console.log('Child removed');
+        //console.debug('Child removed');
         for(var i = 0; i < $scope.postList.length; i += 1) {
           if($scope.postList[i].postId === data.key) {
             $timeout(function() {        
@@ -167,7 +167,7 @@ angular.module('retroman')
         date: Date.now()
       };
 
-      console.log(postData);
+      //console.debug(postData);
       
       // Get a key for a new Post.
       var newPostKey = firebase.database().ref().child('/posts/' + retroId +'/').push().key;
@@ -177,7 +177,7 @@ angular.module('retroman')
       updates['/posts/' + retroId +'/' + newPostKey] = postData;
       updates['/user-posts/' + retroId +'/' + uid + '/' + newPostKey] = postData;
 
-      console.log(updates);
+      //console.debug(updates);
       
       return firebase.database().ref().update(updates);
     }
@@ -189,7 +189,7 @@ angular.module('retroman')
     // [START post_stars_transaction]
     function toggleStar(postRef, uid) {
       postRef.transaction(function(post) {
-        //console.log(post);
+        //console.debug(post);
         if (post) {
           if (post.stars && post.stars[uid]) {
             post.starCount--;
@@ -212,7 +212,7 @@ angular.module('retroman')
      */
     // [START basic_write]
     function writeUserData(userId, name, email, imageUrl, isAnonymous) {
-      //console.log('Adding user');
+      //console.debug('Adding user');
       firebase.database().ref('users/' + userId).set({
         username: name,
         email: email,
@@ -229,7 +229,7 @@ angular.module('retroman')
     function cleanupUi() {
       // Remove all previously displayed posts.
       
-      //console.log('UI cleanup');
+      //console.debug('UI cleanup');
       $scope.postList = []
       
       // Stop all currently listening Firebase listeners.
@@ -244,14 +244,14 @@ angular.module('retroman')
      */
     function onAuthStateChanged(user) {
       
-      //console.log(user);
+      //console.debug(user);
       
       // We ignore token refresh events.
       if (user && currentUID === user.uid) {
         return;
       }
 
-      //console.log('Auth state changed');
+      //console.debug('Auth state changed');
       
       cleanupUi();
       if (user) {
@@ -263,7 +263,7 @@ angular.module('retroman')
         // Set currentUID to null.
         currentUID = null;
         // Display the splash page where you can sign-in.
-        //console.log('Redirecting to login');
+        //console.debug('Redirecting to login');
         $location.path("/login");
         $scope.$apply();
       }
@@ -274,12 +274,12 @@ angular.module('retroman')
      */
     function newPostForCurrentUser(text, type, retroId) {
       var userId = firebase.auth().currentUser.uid;
-      console.log(userId);
-      console.log("New post");
-      console.log('users/' + userId);
+      console.debug(userId);
+      console.debug("New post");
+      console.debug('users/' + userId);
       
       return firebase.database().ref('users/' + userId).once('value').then(function(snapshot) {
-        console.log(snapshot.val());
+        console.debug(snapshot.val());
         var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
         return writeNewPost(firebase.auth().currentUser.uid, username,
             firebase.auth().currentUser.photoURL,
@@ -292,12 +292,12 @@ angular.module('retroman')
        var text = $scope.messageInput;
        var type = $scope.typeInput;
        
-       console.log('Post added ' + text);
-       //console.log(type);
+       console.debug('Post added ' + text);
+       //console.debug(type);
        
        if (text) {
          newPostForCurrentUser(text, type, $scope.retroId).then(function() {
-           console.log('Post add complete');
+           console.debug('Post add complete');
            $timeout(function() {
              $scope.showAddPost = false;
              $scope.showRecentPosts = true;
@@ -308,7 +308,7 @@ angular.module('retroman')
      };
      
      $scope.addPostClicked = function(id) {
-       console.log('Post  adding');
+       console.debug('Post  adding');
        
        $scope.showAddPost = true;
        $scope.showRecentPosts = false;
@@ -327,7 +327,7 @@ angular.module('retroman')
      };
      
      $scope.deletePostClicked = function(post, retroId) {
-       //console.log('Deleting post');
+       //console.debug('Deleting post');
        
        firebase.database().ref('/posts/' + retroId +'/' + post.postId).remove();
        var allUsers = firebase.database().ref('/users');
@@ -335,7 +335,7 @@ angular.module('retroman')
        allUsers.once('value', function(snap) { 
          
          snap.forEach(function(childSnap) {
-           //console.log(childSnap.val());
+           //console.debug(childSnap.val());
            firebase.database().ref('/user-posts/' + retroId +'/' + childSnap.key + '/' + post.postId).remove();
          });
       });

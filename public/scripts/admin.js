@@ -7,7 +7,7 @@ angular.module('retroman')
 
     $scope.getRetros = function() {
       var userId = firebase.auth().currentUser.uid;
-      console.log(userId);
+      console.debug(userId);
       
       firebase.database().ref('/user-retros/' + userId + '/').once('value').then(function(snapshot) {
         snapshot.forEach(function(childSnap) {
@@ -25,9 +25,9 @@ angular.module('retroman')
     }
 
     $scope.addRetroClicked = function() {
-      console.log('Add retro clicked');
+      console.debug('Add retro clicked');
       if (firebase.auth().currentUser.isAnonymous) {
-        console.log('Anonymous cannot add retro');
+        console.debug('Anonymous cannot add retro');
         return;
       }
       
@@ -36,12 +36,12 @@ angular.module('retroman')
     }
         
     $scope.createRetro = function() {
-      console.log('Create retro');
+      console.debug('Create retro');
       var retroId = saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName);
       $scope.showAddRetro = false;
       $scope.showRetroList = true;
       
-      console.log('Showing dialog');
+      console.debug('Showing dialog');
       
       $mdDialog.show(
         $mdDialog.confirm()
@@ -52,9 +52,9 @@ angular.module('retroman')
           .ok('Got it!')
           .cancel('Go to new retro')
       ).then(function() {
-        console.log('Back to admin screen');
+        console.debug('Back to admin screen');
       }, function() {
-        console.log('Go to retro page' + "/#!/home/" + retroId);
+        console.debug('Go to retro page' + "/#!/home/" + retroId);
         
         $timeout(function() {
           $location.path('/home/' + retroId);
@@ -85,10 +85,10 @@ angular.module('retroman')
     }
   
     $scope.deleteRetroClicked = function(retro) {
-      console.log('Deleting retro');
+      console.debug('Deleting retro');
       var userId = firebase.auth().currentUser.uid;
       firebase.database().ref('/retros/' + retro.retroId).remove();
-      //console.log('/retros/' + userId + '/' + retro.retroKey);
+      //console.debug('/retros/' + userId + '/' + retro.retroKey);
       
       for(var i = 0; i < $scope.retroList.length; i += 1) {
         if($scope.retroList[i].retroId === retro.retroId) {
@@ -109,14 +109,14 @@ angular.module('retroman')
       allUsers.once('value', function(snap) { 
         
         snap.forEach(function(childSnap) {
-          //console.log(childSnap.val());
+          //console.debug(childSnap.val());
           firebase.database().ref('/user-posts/' + retro.retroId + '/').remove();
         });
       });
     }
     
     $scope.init = function() {
-      console.log("Initialized AdminController");
+      console.debug("Initialized AdminController");
       $scope.showAddRetro = false;
       $scope.showRetroList = true;
     }
@@ -124,7 +124,7 @@ angular.module('retroman')
     $scope.init();
     
     $scope.onAuthStateChanged = function(user) {
-      console.log('Admin auth state changed');
+      console.debug('Admin auth state changed');
       // We ignore token refresh events.
       if (user && $scope.currentUID === user.uid) {
         return;
