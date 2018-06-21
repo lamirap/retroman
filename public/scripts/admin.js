@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('retroman')
- .controller('AdminController', function ($scope, $timeout, $location, $mdDialog) {
+ .controller('AdminController', function ($scope, $rootScope, $timeout, $location, $mdDialog) {
     $scope.retroList = [];
     $scope.currentUID = null;
 
@@ -75,7 +75,7 @@ angular.module('retroman')
       
       retro.newRetroKey = firebase.database().ref().child('/retros/' + retro.retroId + '/').push().key;
       
-      $scope.retroList.push(retro);
+      $scope.retroList.unshift(retro);
       
       // Write the new post's data simultaneously in the posts list and the user's post list.
       var updates = {};
@@ -135,6 +135,7 @@ angular.module('retroman')
       
       if (user) {
         $scope.currentUID = user.uid;
+        $rootScope.showAdmin = !user.isAnonymous;
         
         if (user.isAnonymous) {
           $mdDialog.show(

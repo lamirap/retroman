@@ -20,7 +20,7 @@ angular.module('retroman')
         }
 
         $scope.onAuthStateChangedLogin = function(user) { 
-          console.debug('Auth state changed login');
+          console.debug('Login Auth state changed login');
           //console.debug(user);
 
           if (user) {

@@ -6,7 +6,7 @@ angular.module('retroman')
         restrict: 'E',
         templateUrl: 'html/retro-card.html',
         controller: function($scope) {
-          console.debug($scope.retro);
+          //console.debug($scope.retro);
           
           $scope.retro.retroQR = new QRCode(document.getElementById("retro-qrcode"), {
             text: window.location.origin + "/#!/home/" + $scope.retro.retroId,

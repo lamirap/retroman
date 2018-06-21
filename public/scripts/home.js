@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('retroman')
-  .controller('HomeController', function ($scope, $location, $timeout, $routeParams, $mdDialog) {
+  .controller('HomeController', function ($scope, $rootScope, $location, $timeout, $routeParams, $mdDialog) {
   
     $scope.retroId = 0;
     
@@ -255,6 +255,7 @@ angular.module('retroman')
       
       cleanupUi();
       if (user) {
+        $rootScope.showAdmin = !user.isAnonymous;
         currentUID = user.uid;
         $scope.splashPage.hide();
         writeUserData(user.uid, user.displayName, user.email, user.photoURL, user.isAnonymous);
