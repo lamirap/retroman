@@ -16,7 +16,7 @@ angular.module('retroman')
           retro.name = childSnap.val().name;
           retro.retroId = childSnap.val().retroId;
           retro.retroKey = childSnap.key;
-          
+                    
           $timeout(function() {
             $scope.retroList.unshift(retro);
           }, 0);          
@@ -44,7 +44,7 @@ angular.module('retroman')
       console.debug('Showing dialog');
       
       console.debug(window.location);
-      console.debug(window.location.origin + "/#!/home/" + retroId);
+      console.debug();
       
       $mdDialog.show(
         $mdDialog.confirm()
