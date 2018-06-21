@@ -43,6 +43,9 @@ angular.module('retroman')
       
       console.debug('Showing dialog');
       
+      console.debug(window.location);
+      console.debug(window.location.origin + "/#!/home/" + retroId);
+      
       $mdDialog.show(
         $mdDialog.confirm()
           .clickOutsideToClose(true)
