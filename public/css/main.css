@@ -247,15 +247,6 @@ a {
   list-style: none;
 }
 
-.retro-name {
-  display: inline-block;
-  vertical-align: middle;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-}
-
 .retro-add {
   height: 30px;
   min-width: 30px;
@@ -264,31 +255,6 @@ a {
   right: -10px;
   vertical-align: middle;
 }
-
-.retro-title {
-  display: inline-block;
-  font-size: 20px;
-  margin-left: 20px;
-  vertical-align: middle;
-}
-
-.retro-link {
-  float: right;
-  vertical-align: middle;
-}
-
-.retro-deletebtn {
-  height: 30px;
-  min-width: 30px;
-  width: 30px;    
-  float: right;
-  display: none;    
-}
-
-.retro:hover .retro-deletebtn{
-  display: block;
-}
-
 
 .retro-header {
   font-family: 'Amaranth', sans-serif;
