@@ -53,7 +53,6 @@ angular.module('retroman')
     
     // Shortcuts to DOM Elements.
     $scope.splashPage = angular.element('#page-splash');
-    $scope.recentPostsSection = angular.element('#recent-posts-list');
     $scope.listeningFirebaseRefs = [];
 
     $scope.showAddPost = false;

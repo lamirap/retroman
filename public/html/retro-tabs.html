@@ -1,59 +1,67 @@
-<div ng-if="includeMobileTemplate">
-  <div class="retro-header"> {{retroName}} </div>
+<div ng-if="includeMobileTemplate" ng-show="showRecentPosts">
+  <div>
+    <div class="retro-header"> {{retroName}} </div>
+  </div>
   
-  <md-tabs md-dynamic-height md-border-bottom id="recent-posts-list" ng-show="showRecentPosts">
+  <md-tabs md-dynamic-height md-border-bottom>
         
    <md-tab label="Start">
-     <md-content class="md-padding">
-       <div class="addpost">
+     <md-tab-label>
          <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="0" ng-click="addPostClicked(0)">
            <i class="material-icons">add_box</i>
          </button>
-       </div>
+         <span>Start</span>
+     </md-tab-label>
+  
+     <md-tab-body>
        <div ng-data="postList"></div>
        <ul class="posts-container">
          <li ng-repeat="item in postList" ng-if="item.type == 0" class="post post-{{item.postId}}" >          
            <message-card item="item"></message-card>
          </li>
        </ul>
-     </md-content>
+     </md-tab-body>
    </md-tab>
    
    <md-tab label="Stop">
-     <md-content class="md-padding">
-       <div class="addpost">
-         <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="1" ng-click="addPostClicked(1)">
-           <i class="material-icons">add_box</i>
-         </button>
-       </div>
+     <md-tab-label>
+       <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="1" ng-click="addPostClicked(1)">
+         <i class="material-icons">add_box</i>
+       </button>
+       <span>Stop</span>
+     </md-tab-label>
+     
+      <md-tab-body>
        <ul class="posts-container">
          <li ng-repeat="item in postList" ng-if="item.type == 1" class="post post-{{item.postId}}" >
            <message-card item="item"></message-card>
          </li>
        </ul>
-     </md-content>
+     </md-tab-body>
    </md-tab>
    
    <md-tab label="Continue">
-     <md-content class="md-padding">
-       <div class="addpost">
-         <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="2" ng-click="addPostClicked(2)">
-           <i class="material-icons">add_box</i>
-         </button>
-       </div>
+     <md-tab-label>
+       <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="2" ng-click="addPostClicked(2)">
+         <i class="material-icons">add_box</i>
+       </button>
+       <span>Continue</span>
+     </md-tab-label>
+
+      <md-tab-body>
        <ul class="posts-container">
          <li ng-repeat="item in postList" ng-if="item.type == 2" class="post post-{{item.postId}}" >
            <message-card item="item"></message-card>
          </li>
        </ul>
-     </md-content>
+     </md-tab-body>
    </md-tab>
  </md-tabs>
 </div>
     
-<div ng-if="includeDesktopTemplate">
+<div ng-if="includeDesktopTemplate" ng-show="showRecentPosts">
   <!-- Show a list of recent posts -->
-  <div class="mdl-grid" id="recent-posts-list" ng-show="showRecentPosts">
+  <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
       <div class="retro-header"> {{retroName}} </div>
     </div>
