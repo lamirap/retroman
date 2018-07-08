@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('retroman')
-  .controller('HomeController', function ($scope, $rootScope, $location, $timeout, $routeParams, $mdDialog) {
+  .controller('HomeController', function ($scope, $rootScope, $location, $timeout, $routeParams, $mdDialog, retrodb) {
   
     $scope.retroId = 0;
     
@@ -108,8 +108,8 @@ angular.module('retroman')
           console.debug('Star clicked');
           var globalPostRef = firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId);
           var userPostRef = firebase.database().ref('/user-posts/' + $scope.retroId +'/' + post.authorId + '/' + post.postId);
-          toggleStar(globalPostRef, uid);
-          toggleStar(userPostRef, uid);
+          retrodb.toggleStar(globalPostRef, uid);
+          retrodb.toggleStar(userPostRef, uid);
         };
         
         $timeout(function() {
@@ -151,61 +151,6 @@ angular.module('retroman')
       $scope.listeningFirebaseRefs.push(recentPostsRef);
     }
 
-    /**
-     * Saves a new post to the Firebase DB.
-     */
-    // [START write_fan_out]
-    function writeNewPost(uid, username, picture, body, type, retroId) {
-      // A post entry.
-      var postData = {
-        author: username,
-        uid: uid,
-        body: body,
-        type: type,
-        starCount: 0,
-        authorPic: picture,
-        date: Date.now()
-      };
-
-      //console.debug(postData);
-      
-      // Get a key for a new Post.
-      var newPostKey = firebase.database().ref().child('/posts/' + retroId +'/').push().key;
-
-      // Write the new post's data simultaneously in the posts list and the user's post list.
-      var updates = {};
-      updates['/posts/' + retroId +'/' + newPostKey] = postData;
-      updates['/user-posts/' + retroId +'/' + uid + '/' + newPostKey] = postData;
-
-      //console.debug(updates);
-      
-      return firebase.database().ref().update(updates);
-    }
-    // [END write_fan_out]
-
-    /**
-     * Star/unstar post.
-     */
-    // [START post_stars_transaction]
-    function toggleStar(postRef, uid) {
-      postRef.transaction(function(post) {
-        //console.debug(post);
-        if (post) {
-          if (post.stars && post.stars[uid]) {
-            post.starCount--;
-            post.stars[uid] = null;
-          } else {
-            post.starCount++;
-            if (!post.stars) {
-              post.stars = {};
-            }
-            post.stars[uid] = true;
-          }
-        }
-        return post;
-      });
-    }
-    // [END post_stars_transaction]
 
     /**
      * Writes the user's data to the database.
@@ -270,24 +215,6 @@ angular.module('retroman')
       }
     }
 
-    /**
-     * Creates a new post for the current user.
-     */
-    function newPostForCurrentUser(text, type, retroId) {
-      var userId = firebase.auth().currentUser.uid;
-      console.debug(userId);
-      console.debug("New post");
-      console.debug('users/' + userId);
-      
-      return firebase.database().ref('users/' + userId).once('value').then(function(snapshot) {
-        console.debug(snapshot.val());
-        var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-        return writeNewPost(firebase.auth().currentUser.uid, username,
-            firebase.auth().currentUser.photoURL,
-            text, type, retroId);
-      });
-    }
-
      // Saves message on form submit.
      $scope.formSubmit = function() {
        var text = $scope.messageInput;
@@ -297,7 +224,7 @@ angular.module('retroman')
        //console.debug(type);
        
        if (text) {
-         newPostForCurrentUser(text, type, $scope.retroId).then(function() {
+         retrodb.newPostForCurrentUser(text, type, $scope.retroId).then(function() {
            console.debug('Post add complete');
            $timeout(function() {
              $scope.showAddPost = false;
