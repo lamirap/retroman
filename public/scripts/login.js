@@ -26,15 +26,9 @@ angular.module('retroman')
           if (user) {
             $rootScope.showAdmin = !user.isAnonymous;
             
-            if (user.isAnonymous) {
-              $timeout(function() {
-                $location.path( "/home" );  
-              }, 0);            
-            } else {
-              $timeout(function() {
-                $location.path( "/admin" );
-              }, 0); 
-            }
+            $timeout(function() {
+              $location.path( "/home" );  
+            }, 0);            
           } else {
             //console.debug('Redirecting to login');
             $timeout(function() {
