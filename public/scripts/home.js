@@ -106,10 +106,7 @@ angular.module('retroman')
         // Bind starring action.
         $scope.onStarClicked = function(post) {
           console.debug('Star clicked');
-          var globalPostRef = firebase.database().ref('/posts/' + $scope.retroId +'/' + post.postId);
-          var userPostRef = firebase.database().ref('/user-posts/' + $scope.retroId +'/' + post.authorId + '/' + post.postId);
-          retrodb.toggleStar(globalPostRef, uid);
-          retrodb.toggleStar(userPostRef, uid);
+          retrodb.toggleStar($scope.retroId, post);
         };
         
         $timeout(function() {

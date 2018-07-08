@@ -55,7 +55,7 @@ angular.module('retroman')
     /**
      * Star/unstar post.
      */
-    this.toggleStar = function(postRef, uid) {
+    function toggleStarRef(postRef, uid) {
       postRef.transaction(function(post) {
         //console.debug(post);
         if (post) {
@@ -72,6 +72,18 @@ angular.module('retroman')
         }
         return post;
       });
+    }
+    
+    /**
+     * Star/unstar post.
+     */
+    this.toggleStar = function(retroId, post) {      
+      var uid = firebase.auth().currentUser.uid;
+
+      var globalPostRef = firebase.database().ref('/posts/' + retroId +'/' + post.postId);
+      var userPostRef = firebase.database().ref('/user-posts/' + retroId +'/' + post.authorId + '/' + post.postId);
+      toggleStarRef(globalPostRef, uid);
+      toggleStarRef(userPostRef, uid);  
     }
     
     /**
