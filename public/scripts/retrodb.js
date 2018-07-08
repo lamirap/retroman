@@ -55,7 +55,6 @@ angular.module('retroman')
     /**
      * Star/unstar post.
      */
-    // [START post_stars_transaction]
     this.toggleStar = function(postRef, uid) {
       postRef.transaction(function(post) {
         //console.debug(post);
@@ -74,7 +73,34 @@ angular.module('retroman')
         return post;
       });
     }
-    // [END post_stars_transaction]
+    
+    /**
+     * Writes the user's data to the database.
+     */
+    this.writeUserData = function(userId, name, email, imageUrl, isAnonymous) {
+      //console.debug('Adding user');
+      firebase.database().ref('users/' + userId).set({
+        username: name,
+        email: email,
+        profile_picture : imageUrl,
+        userId : userId,
+        isAnonymous : isAnonymous
+      });
+    }
 
+    this.deletePost = function(post, retroId) {
+      //console.debug('Deleting post');
+      
+      firebase.database().ref('/posts/' + retroId +'/' + post.postId).remove();
+      var allUsers = firebase.database().ref('/users');
+      
+      allUsers.once('value', function(snap) { 
+        
+        snap.forEach(function(childSnap) {
+          //console.debug(childSnap.val());
+          firebase.database().ref('/user-posts/' + retroId +'/' + childSnap.key + '/' + post.postId).remove();
+        });
+     });
+    };
 
 });

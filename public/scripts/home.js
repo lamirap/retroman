@@ -151,23 +151,6 @@ angular.module('retroman')
       $scope.listeningFirebaseRefs.push(recentPostsRef);
     }
 
-
-    /**
-     * Writes the user's data to the database.
-     */
-    // [START basic_write]
-    function writeUserData(userId, name, email, imageUrl, isAnonymous) {
-      //console.debug('Adding user');
-      firebase.database().ref('users/' + userId).set({
-        username: name,
-        email: email,
-        profile_picture : imageUrl,
-        userId : userId,
-        isAnonymous : isAnonymous
-      });
-    }
-    // [END basic_write]
-
     /**
      * Cleanups the UI and removes all Firebase listeners.
      */
@@ -203,7 +186,7 @@ angular.module('retroman')
         $rootScope.showAdmin = !user.isAnonymous;
         currentUID = user.uid;
         $scope.splashPage.hide();
-        writeUserData(user.uid, user.displayName, user.email, user.photoURL, user.isAnonymous);
+        retrodb.writeUserData(user.uid, user.displayName, user.email, user.photoURL, user.isAnonymous);
         startDatabaseQueries();
       } else {
         // Set currentUID to null.
@@ -255,18 +238,7 @@ angular.module('retroman')
      };
      
      $scope.deletePostClicked = function(post, retroId) {
-       //console.debug('Deleting post');
-       
-       firebase.database().ref('/posts/' + retroId +'/' + post.postId).remove();
-       var allUsers = firebase.database().ref('/users');
-       
-       allUsers.once('value', function(snap) { 
-         
-         snap.forEach(function(childSnap) {
-           //console.debug(childSnap.val());
-           firebase.database().ref('/user-posts/' + retroId +'/' + childSnap.key + '/' + post.postId).remove();
-         });
-      });
+       retrodb.deletePost(post, retroId);
      };
      
      var unsubscribe = firebase.auth().onAuthStateChanged(onAuthStateChanged);  
