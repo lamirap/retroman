@@ -64,9 +64,10 @@ angular.module('retroman')
     /**
      * Starts listening for new posts and populates posts lists.
      */
-    $scope.startDatabaseQueries = function() {
+    function startDatabaseQueries() {
       // [START recent_posts_query]
       var recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
+      //var recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('starCount').limitToLast(100);
       // [END recent_posts_query]
 
       // Fetching and displaying all posts of each sections.
@@ -258,7 +259,7 @@ angular.module('retroman')
         currentUID = user.uid;
         $scope.splashPage.hide();
         writeUserData(user.uid, user.displayName, user.email, user.photoURL, user.isAnonymous);
-        $scope.startDatabaseQueries();
+        startDatabaseQueries();
       } else {
         // Set currentUID to null.
         currentUID = null;
