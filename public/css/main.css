@@ -263,3 +263,22 @@ a {
   padding-left: 20px;
   margin: 5px;
 }
+
+.retro-header-mobile {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 32px;
+  position: relative;
+  padding-left: 20px;
+  margin: 20px;
+}
+
+md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active md-icon, md-tabs.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active md-icon, md-tabs.md-default-theme.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-focused, md-tabs.md-default-theme.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-focused md-icon {
+  background: #1088c1 !important;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+md-tabs md-ink-bar {
+  color: #1088c1;
+  background-color: #1088c1;
+}
