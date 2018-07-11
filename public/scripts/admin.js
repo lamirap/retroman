@@ -1,22 +1,24 @@
 'use strict';
 
 angular.module('retroman')
- .controller('AdminController', function ($scope, $rootScope, $timeout, $location, $mdDialog) {
+ .controller('AdminController', function ($scope, $rootScope, $timeout, $location, $mdDialog, retrodb) {
     $scope.retroList = [];
     $scope.currentUID = null;
 
     $scope.getRetros = function() {
+      
       var userId = firebase.auth().currentUser.uid;
       console.debug(userId);
       
-      firebase.database().ref('/user-retros/' + userId + '/').once('value').then(function(snapshot) {
+      var userRetrosRef = firebase.database().ref('/user-retros/' + userId + '/');
+      userRetrosRef.on('value', function(snapshot) {
         snapshot.forEach(function(childSnap) {
           var retro = {};
           
           retro.name = childSnap.val().name;
           retro.retroId = childSnap.val().retroId;
           retro.retroKey = childSnap.key;
-                    
+          
           $timeout(function() {
             $scope.retroList.unshift(retro);
           }, 0);          
@@ -40,12 +42,7 @@ angular.module('retroman')
       var retroId = saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName);
       $scope.showAddRetro = false;
       $scope.showRetroList = true;
-      
-      console.debug('Showing dialog');
-      
-      console.debug(window.location);
-      console.debug();
-      
+            
       $mdDialog.show(
         $mdDialog.confirm()
           .clickOutsideToClose(true)
@@ -88,34 +85,18 @@ angular.module('retroman')
     }
   
     $scope.deleteRetroClicked = function(retro) {
-      console.debug('Deleting retro');
-      var userId = firebase.auth().currentUser.uid;
-      firebase.database().ref('/retros/' + retro.retroId).remove();
-      //console.debug('/retros/' + userId + '/' + retro.retroKey);
       
-      for(var i = 0; i < $scope.retroList.length; i += 1) {
-        if($scope.retroList[i].retroId === retro.retroId) {
+      retrodb.deleteRetro(retro);
+      
+      for (var i = 0; i < $scope.retroList.length; i += 1) {
+        if ($scope.retroList[i].retroId === retro.retroId) {
+          console.log("Deleting and splicing");
           $timeout(function() {        
             $scope.retroList.splice(i, 1);
           }, 0);
           break;
         }
       }
-
-      firebase.database().ref('/user-retros/' + userId + '/' + retro.retroKey).remove();
-      
-      //Remove posts from deleted retro also
-      
-      firebase.database().ref('/posts/' + retro.retroId + '/').remove();
-      var allUsers = firebase.database().ref('/users');
-      
-      allUsers.once('value', function(snap) { 
-        
-        snap.forEach(function(childSnap) {
-          //console.debug(childSnap.val());
-          firebase.database().ref('/user-posts/' + retro.retroId + '/').remove();
-        });
-      });
     }
     
     $scope.init = function() {

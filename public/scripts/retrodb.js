@@ -100,6 +100,9 @@ angular.module('retroman')
       });
     }
 
+    /**
+     * Delete Post
+     */
     this.deletePost = function(post, retroId) {
       //console.debug('Deleting post');
       
@@ -114,5 +117,53 @@ angular.module('retroman')
         });
      });
     };
+
+
+    /**
+     * Delete retro
+     */
+    this.deleteRetro = function(retro) {
+      console.debug('Deleting retro');
+      var userId = firebase.auth().currentUser.uid;
+      firebase.database().ref('/retros/' + retro.retroId).remove();
+      //console.debug('/retros/' + userId + '/' + retro.retroKey);
+      
+      firebase.database().ref('/user-retros/' + userId + '/' + retro.retroKey).remove();
+      
+      //Remove posts from deleted retro also
+      
+      firebase.database().ref('/posts/' + retro.retroId + '/').remove();
+      var allUsers = firebase.database().ref('/users');
+      
+      allUsers.once('value', function(snap) { 
+        
+        snap.forEach(function(childSnap) {
+          //console.debug(childSnap.val());
+          firebase.database().ref('/user-posts/' + retro.retroId + '/').remove();
+        });
+      });
+    }
+
+
+    /**
+     * Get Retros
+     */
+    this.getRetros = function(retroList) {
+      var userId = firebase.auth().currentUser.uid;
+      console.debug(userId);
+      
+      var userRetrosRef = firebase.database().ref('/user-retros/' + userId + '/');
+      userRetrosRef.on('value', function(snapshot) {
+        snapshot.forEach(function(childSnap) {
+          var retro = {};
+          
+          retro.name = childSnap.val().name;
+          retro.retroId = childSnap.val().retroId;
+          retro.retroKey = childSnap.key;
+          
+          retroList.unshift(retro);
+        });
+      });      
+    }
 
 });
