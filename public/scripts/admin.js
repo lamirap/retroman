@@ -12,6 +12,7 @@ angular.module('retroman')
       
       var userRetrosRef = firebase.database().ref('/user-retros/' + userId + '/');
       userRetrosRef.on('value', function(snapshot) {
+        $scope.retroList = [];
         snapshot.forEach(function(childSnap) {
           var retro = {};
           
@@ -21,7 +22,7 @@ angular.module('retroman')
           
           $timeout(function() {
             $scope.retroList.unshift(retro);
-          }, 0);          
+          }, 0);
         });
       });
     }
@@ -42,7 +43,8 @@ angular.module('retroman')
       var retroId = saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName);
       $scope.showAddRetro = false;
       $scope.showRetroList = true;
-            
+      $scope.retroName = "";
+      
       $mdDialog.show(
         $mdDialog.confirm()
           .clickOutsideToClose(true)
