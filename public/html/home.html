@@ -53,7 +53,7 @@
           <form id="message-form" name="msgform">
             <input class="mdl-textfield__input" type="hidden" id="new-post-type" ng-model="typeInput">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" rows="3" id="new-post-message" name="messageInput" ng-model="messageInput" placeholder="Post message ..." ng-minlength=20 ng-maxlength=1024 required></textarea>
+              <textarea class="mdl-textfield__input" rows="3" id="new-post-message" name="messageInput" ng-model="messageInput" placeholder="Post message ..." ng-minlength=20 ng-maxlength=1024></textarea>
             </div>
             
             <div class="error" ng-show="msgform.messageInput.$dirty && msgform.messageInput.$invalid">
@@ -64,6 +64,10 @@
                   Post should be max 1024 characters
               </small>
             </div>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="backClicked()">
+              Back
+            </button>
             
             <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="formSubmit()" ng-disabled="msgform.$invalid">
               Add post

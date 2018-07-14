@@ -32,11 +32,25 @@
           <h2 class="mdl-card__title-text">New Retro</h2>
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <form>
+          <form name="retrocreateform">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input"  ng-model="retroName" placeholder="Retro Name ..."></textarea>
+              <textarea class="mdl-textfield__input" name="retroName" ng-model="retroName" placeholder="Retro Name ..." ng-minlength=8 ng-maxlength=20></textarea>
             </div>
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="createRetro()">
+            
+            <div class="error" ng-show="retrocreateform.retroName.$dirty && retrocreateform.retroName.$invalid">
+              <small class="error" ng-show="retrocreateform.retroName.$error.minlength">
+                  Retro name is at least 8 characters
+              </small>
+              <small class="error" ng-show="retrocreateform.retroName.$error.maxlength">
+                  Retro name is max 20 characters
+              </small>
+            </div>
+            
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="backClicked()" >
+              Back
+            </button>
+            
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="createRetro()" ng-disabled="retrocreateform.$invalid">
               Add Retro
             </button>
           </form>

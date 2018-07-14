@@ -100,6 +100,11 @@ angular.module('retroman')
         }
       }
     }
+
+    $scope.backClicked = function() {
+      $scope.showAddRetro = false;
+      $scope.showRetroList = true;
+    }
     
     $scope.init = function() {
       console.debug("Initialized AdminController");

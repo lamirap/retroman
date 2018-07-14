@@ -213,7 +213,13 @@ angular.module('retroman')
          });
          $scope.messageInput = '';
        }
-     };
+     }
+     
+     // Saves message on form submit.
+     $scope.backClicked = function() {
+       $scope.showAddPost = false;
+       $scope.showRecentPosts = true;
+     }
      
      $scope.addPostClicked = function(id) {
        console.debug('Post  adding');
