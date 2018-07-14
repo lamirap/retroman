@@ -69,9 +69,11 @@
     <header class="header mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
       <div class="mdl-layout__header-row">
         <a class="logo" ng-href="#!/home"><h3>retroman</h3></a>
-        <a href="#!/admin" ng-show="showAdmin">Admin</a>
+        <a href="#!/admin" id="admin-button" ng-show="showAdmin" class="mdl-button--fab mdl-button mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">settings</i>
+        </a>
         <a href="#!/logout" id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">account_circle</i> Sign out</button>
+          <i class="material-icons">account_circle</i> Sign out
         </a>
       </div>
 

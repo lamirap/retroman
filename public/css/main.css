@@ -73,7 +73,15 @@ a {
 }
 #sign-out-button {
   color: inherit;
-  right: 0;
+  right: 10px;
+  position: absolute;
+}
+#admin-button {
+  color: inherit;
+  width: 32px;
+  height: 32px;
+  right: 150px;
+  min-width: initial;
   position: absolute;
 }
 .mdl-button .material-icons {
