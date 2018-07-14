@@ -10,7 +10,7 @@ angular.module('retroman')
 
       //console.debug($routeParams);
       
-      console.debug($scope.retroId);
+      //console.debug($scope.retroId);
       
       if (!$scope.retroId) {
         $timeout(function() {

@@ -11,20 +11,33 @@ angular.module('retroman')
       console.debug(userId);
       
       var userRetrosRef = firebase.database().ref('/user-retros/' + userId + '/');
-      userRetrosRef.on('value', function(snapshot) {
-        $scope.retroList = [];
-        snapshot.forEach(function(childSnap) {
-          var retro = {};
-          
-          retro.name = childSnap.val().name;
-          retro.retroId = childSnap.val().retroId;
-          retro.retroKey = childSnap.key;
-          
-          $timeout(function() {
-            $scope.retroList.unshift(retro);
-          }, 0);
-        });
+      
+      userRetrosRef.on('child_added', function(data) {
+        console.debug('Child added ', data);
+        var retro = {};
+
+        retro.name = data.val().name;
+        retro.retroId = data.val().retroId;
+        retro.retroKey = data.key;
+        
+        $timeout(function() {
+          $scope.retroList.unshift(retro);
+        }, 0);
+
       });
+      
+      userRetrosRef.on('child_removed', function(data) {
+        console.debug('Child removed ', data);
+        for(var i = 0; i < $scope.retroList.length; i += 1) {
+          if($scope.retroList[i].retroKey === data.key) {
+            $timeout(function() {        
+              $scope.retroList.splice(i, 1);
+            }, 0);
+            return;
+          }
+        }
+      });
+      
     }
 
     $scope.addRetroClicked = function() {
@@ -73,9 +86,7 @@ angular.module('retroman')
       retro.uid = userId;
       
       retro.newRetroKey = firebase.database().ref().child('/retros/' + retro.retroId + '/').push().key;
-      
-      $scope.retroList.unshift(retro);
-      
+            
       // Write the new post's data simultaneously in the posts list and the user's post list.
       var updates = {};
       updates['/retros/' + retro.retroId] = retro;
@@ -87,18 +98,8 @@ angular.module('retroman')
     }
   
     $scope.deleteRetroClicked = function(retro) {
-      
-      retrodb.deleteRetro(retro);
-      
-      for (var i = 0; i < $scope.retroList.length; i += 1) {
-        if ($scope.retroList[i].retroId === retro.retroId) {
-          console.log("Deleting and splicing");
-          $timeout(function() {        
-            $scope.retroList.splice(i, 1);
-          }, 0);
-          break;
-        }
-      }
+      console.debug("Deleting retro now");
+      retrodb.deleteRetro(retro);      
     }
 
     $scope.backClicked = function() {
