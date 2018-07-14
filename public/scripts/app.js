@@ -1,6 +1,6 @@
 'use strict';
 
-var myAPP = angular.module('retroman', [ 'ngRoute', 'ngMaterial' ]);
+var myAPP = angular.module('retroman', [ 'ngRoute', 'ngMaterial', 'ngAnimate' ]);
 
 myAPP.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.

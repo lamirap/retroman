@@ -282,3 +282,26 @@ md-tabs md-ink-bar {
   color: #1088c1;
   background-color: #1088c1;
 }
+
+li.ng-enter {
+  -webkit-transition: 3s;
+  transition: 3s;
+  
+  opacity: 0;
+}
+
+li.ng-enter-active {
+  opacity: 1;
+}
+
+li.ng-leave {
+  -webkit-transition: 2s;
+  transition: 2s;
+  
+  opacity: 1;
+}
+
+li.ng-leave-active {
+  opacity: 0;
+}
+

@@ -112,11 +112,7 @@ angular.module('retroman')
         $timeout(function() {
           $scope.postList.unshift(post);
         }, 0);
-        //console.debug(post);
-        
-        $(".post-" + post.postId).hide().delay().fadeIn(2000);      
-        //console.debug(".post-" + post.postId);
-        //console.debug($(".post-" + post.postId).html());
+        //console.debug(post);        
       });
       
       recentPostsRef.on('child_changed', function(data) {	
