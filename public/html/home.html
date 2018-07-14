@@ -15,8 +15,15 @@
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <form id="retroid-form" name="retroform">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" rows="1" name="retroIdInput" ng-model="retroIdInput" placeholder="RetroId ..." required></textarea>
+              <textarea class="mdl-textfield__input" rows="1" name="retroIdInput" ng-model="retroIdInput" placeholder="RetroId ..." ng-minlength=6 required></textarea>
             </div>
+            
+            <div class="error" ng-show="retroform.retroIdInput.$dirty && retroform.retroIdInput.$invalid">
+              <small class="error" ng-show="retroform.retroIdInput.$error.minlength">
+                  RetrodID is at least 6 characters
+              </small>
+            </div>
+            
             <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="retroIdSubmit()" ng-disabled="retroform.$invalid">
               Go To Retro
             </button>
