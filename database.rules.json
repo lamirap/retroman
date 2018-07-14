@@ -3,7 +3,9 @@
     ".read": "auth != null",
     ".write": "auth != null",
     "posts": {
-      ".indexOn": "date"
+      "$retroId": {
+        ".indexOn": ["date", "starCount"]
+      }
     }
   }
 }
