@@ -15,12 +15,15 @@
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <form id="retroid-form" name="retroform">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" rows="1" name="retroIdInput" ng-model="retroIdInput" placeholder="RetroId ..." ng-minlength=6 required></textarea>
+              <textarea class="mdl-textfield__input" rows="1" name="retroIdInput" ng-model="retroIdInput" placeholder="RetroId ..." ng-minlength=6 ng-maxlength=8 required></textarea>
             </div>
             
             <div class="error" ng-show="retroform.retroIdInput.$dirty && retroform.retroIdInput.$invalid">
               <small class="error" ng-show="retroform.retroIdInput.$error.minlength">
                   RetrodID is at least 6 characters
+              </small>
+              <small class="error" ng-show="retroform.retroIdInput.$error.maxlength">
+                  RetrodID is max 8 characters
               </small>
             </div>
             
@@ -47,12 +50,22 @@
           <h2 class="mdl-card__title-text">New Post</h2>
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <form id="message-form">
+          <form id="message-form" name="msgform">
             <input class="mdl-textfield__input" type="hidden" id="new-post-type" ng-model="typeInput">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" rows="3" id="new-post-message" ng-model="messageInput" placeholder="Post message ..."></textarea>
+              <textarea class="mdl-textfield__input" rows="3" id="new-post-message" name="messageInput" ng-model="messageInput" placeholder="Post message ..." ng-minlength=20 ng-maxlength=1024 required></textarea>
             </div>
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="formSubmit()">
+            
+            <div class="error" ng-show="msgform.messageInput.$dirty && msgform.messageInput.$invalid">
+              <small class="error" ng-show="msgform.messageInput.$error.minlength">
+                  Post must be at least 20 characters
+              </small>
+              <small class="error" ng-show="msgform.messageInput.$error.maxlength">
+                  Post should be max 1024 characters
+              </small>
+            </div>
+            
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="formSubmit()" ng-disabled="msgform.$invalid">
               Add post
             </button>
           </form>
