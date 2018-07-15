@@ -116,6 +116,8 @@ angular.module('retroman')
           firebase.database().ref('/user-posts/' + retroId +'/' + childSnap.key + '/' + post.postId).remove();
         });
      });
+     
+     allUsers.off();
     };
 
 
@@ -142,28 +144,8 @@ angular.module('retroman')
           firebase.database().ref('/user-posts/' + retro.retroId + '/').remove();
         });
       });
-    }
-
-
-    /**
-     * Get Retros
-     */
-    this.getRetros = function(retroList) {
-      var userId = firebase.auth().currentUser.uid;
-      console.debug(userId);
       
-      var userRetrosRef = firebase.database().ref('/user-retros/' + userId + '/');
-      userRetrosRef.on('value', function(snapshot) {
-        snapshot.forEach(function(childSnap) {
-          var retro = {};
-          
-          retro.name = childSnap.val().name;
-          retro.retroId = childSnap.val().retroId;
-          retro.retroKey = childSnap.key;
-          
-          retroList.unshift(retro);
-        });
-      });      
+      allUsers.off();
     }
 
 });
