@@ -7,8 +7,6 @@ angular.module('retroman')
     
     $scope.$on('$routeChangeSuccess', function() {
       $scope.retroId = $routeParams.retroId;
-
-      //console.debug($routeParams);
       
       //console.debug($scope.retroId);
       
@@ -184,6 +182,7 @@ angular.module('retroman')
       } else {
         // Set currentUID to null.
         currentUID = null;
+        $rootScope.referrer = $location.path();
         // Display the splash page where you can sign-in.
         //console.debug('Redirecting to login');
         $location.path("/login");
