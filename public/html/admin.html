@@ -32,11 +32,26 @@
           <h2 class="mdl-card__title-text">New Retro</h2>
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          
+          
+          
+          
           <form name="retrocreateform">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" name="retroName" ng-model="retroName" placeholder="Retro Name ..." ng-minlength=8 ng-maxlength=20></textarea>
-            </div>
             
+            <md-input-container class="md-block">
+              <label>Retro Name:</label>
+              <textarea class="mdl-textfield__input" name="retroName" ng-model="retroName" placeholder="Retro Name ..." ng-minlength=8 ng-maxlength=20 md-select-on-focus></textarea>
+            </md-input-container>
+            
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Retro Type:</label>
+              <md-select ng-model="selectedRetroType">
+                <md-option ng-repeat="retroType in retroTypes" value="{{retroType.id}}">
+                  {{retroType.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+
             <div class="error" ng-show="retrocreateform.retroName.$dirty && retrocreateform.retroName.$invalid">
               <small class="error" ng-show="retrocreateform.retroName.$error.minlength">
                   Retro name is at least 8 characters

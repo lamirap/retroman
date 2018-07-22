@@ -54,6 +54,7 @@ a {
   padding: 10px 20px;
   position: relative;
 }
+
 @media screen and (max-width: 479px) {
   .mdl-grid {
     padding: 0;

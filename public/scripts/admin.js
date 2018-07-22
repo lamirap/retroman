@@ -4,6 +4,7 @@ angular.module('retroman')
  .controller('AdminController', function ($scope, $rootScope, $timeout, $location, $mdDialog, retrodb) {
     $scope.retroList = [];
     $scope.currentUID = null;
+    $scope.retroTypes = [];
 
     $scope.getRetros = function() {
       
@@ -40,6 +41,28 @@ angular.module('retroman')
       
     }
 
+    $scope.getRetroTypes = function() {
+      
+      var retroTypesRef = firebase.database().ref('/retro-types/');
+      //console.log("Retro-types called");
+      
+      retroTypesRef.on('child_added', function(data) {
+        //console.debug("Data received");
+        var retroType = {};
+
+        retroType.name = data.val().name;
+        retroType.count = data.val().count;
+        retroType.fields = data.val().fields;
+        retroType.id = data.key;
+        
+        $timeout(function() {
+          $scope.retroTypes.unshift(retroType);
+        }, 0);
+        
+        //console.log(retroType);
+      });      
+    }
+
     $scope.addRetroClicked = function() {
       console.debug('Add retro clicked');
       if (firebase.auth().currentUser.isAnonymous) {
@@ -53,7 +76,7 @@ angular.module('retroman')
         
     $scope.createRetro = function() {
       console.debug('Create retro');
-      var retroId = saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName);
+      var retroId = saveNewRetro(firebase.auth().currentUser.uid, $scope.retroName, $scope.selectedRetroType);
       $scope.showAddRetro = false;
       $scope.showRetroList = true;
       $scope.retroName = "";
@@ -77,13 +100,14 @@ angular.module('retroman')
       });
     }
     
-    function saveNewRetro(userId, name) {
+    function saveNewRetro(userId, name, retroType) {
       // Get a key for a new Post.
       var retro = {};
 
       retro.name = name;
       retro.retroId = Math.random().toString(36).substr(2, 6);
       retro.uid = userId;
+      retro.retroType = retroType;
       
       retro.newRetroKey = firebase.database().ref().child('/retros/' + retro.retroId + '/').push().key;
             
@@ -141,6 +165,7 @@ angular.module('retroman')
           });
         } else {
           $scope.getRetros();
+          $scope.getRetroTypes();
         }
       } else {
         // Set currentUID to null.
