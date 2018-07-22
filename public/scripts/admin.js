@@ -43,24 +43,14 @@ angular.module('retroman')
 
     $scope.getRetroTypes = function() {
       
-      var retroTypesRef = firebase.database().ref('/retro-types/');
-      //console.log("Retro-types called");
-      
-      retroTypesRef.on('child_added', function(data) {
-        //console.debug("Data received");
-        var retroType = {};
-
-        retroType.name = data.val().name;
-        retroType.count = data.val().count;
-        retroType.fields = data.val().fields;
-        retroType.id = data.key;
-        
+      $scope.onNewRetroType = function(retroType) {
+        //console.log("New retro type called", retroType);
         $timeout(function() {
           $scope.retroTypes.unshift(retroType);
         }, 0);
-        
-        //console.log(retroType);
-      });      
+      }
+      
+      retrodb.getRetroTypes($scope.onNewRetroType);
     }
 
     $scope.addRetroClicked = function() {

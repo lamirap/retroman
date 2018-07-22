@@ -146,6 +146,29 @@ angular.module('retroman')
       });
       
       allUsers.off();
+    };
+    
+    this.getRetroTypes = function(onNewRetroType) {
+      
+      var retroTypesRef = firebase.database().ref('/retro-types/');
+      //console.log("Retro-types called");
+      
+      retroTypesRef.once('value', function(snap) {
+        
+        snap.forEach(function(data) {
+          //console.debug("Data received");
+          var retroType = {};
+
+          retroType.name = data.val().name;
+          retroType.count = data.val().count;
+          retroType.fields = data.val().fields;
+          retroType.retroTypeKey = data.key;
+          
+          //console.log("Calling new retroType");
+          onNewRetroType(retroType);
+        });
+      });
+      
     }
 
 });
