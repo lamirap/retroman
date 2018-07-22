@@ -4,6 +4,14 @@ angular.module('retroman')
   .controller('HomeController', function ($scope, $rootScope, $location, $timeout, $routeParams, $mdDialog, retrodb) {
   
     $scope.retroId = 0;
+    $scope.retroTypes = [];
+  
+    retrodb.getRetroTypes(function(retroType) {
+      //console.log("New retro type called", retroType);
+      $timeout(function() {
+        $scope.retroTypes.unshift(retroType);
+      }, 0);
+    });
     
     $scope.$on('$routeChangeSuccess', function() {
       $scope.retroId = $routeParams.retroId;
@@ -32,9 +40,17 @@ angular.module('retroman')
               }, 0);
             });
           } else {
-            console.debug('Retro found' + snapshot.val().name);
+            console.debug('Retro found', snapshot.val().name, snapshot.val().retroTypeId);
             $timeout(function() {
               $scope.retroName = snapshot.val().name;
+              var retroTypeId = snapshot.val().retroTypeId;
+              
+              for(var i = 0; i < $scope.retroTypes.length; i += 1) {
+                if($scope.retroTypes[i].retroTypeId === retroTypeId) {
+                    $scope.currentRetroType = $scope.retroTypes[i];
+                    break;
+                }
+              }
             }, 0);
           }
         }, function(error) {
@@ -63,6 +79,7 @@ angular.module('retroman')
      * Starts listening for new posts and populates posts lists.
      */
     function startDatabaseQueries() {
+                  
       // [START recent_posts_query]
       var recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
       //var recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('starCount').limitToLast(100);
@@ -177,7 +194,7 @@ angular.module('retroman')
         $rootScope.showAdmin = !user.isAnonymous;
         currentUID = user.uid;
         $scope.splashPage.hide();
-        retrodb.writeUserData(user.uid, user.displayName, user.email, user.photoURL, user.isAnonymous);
+        retrodb.writeUserData(user.uid, user.displayName, user.email, user.photoURL, user.isAnonymous);        
         startDatabaseQueries();
       } else {
         // Set currentUID to null.

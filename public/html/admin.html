@@ -46,7 +46,7 @@
             <md-input-container class="md-block" flex-gt-sm>
               <label>Retro Type:</label>
               <md-select ng-model="selectedRetroType">
-                <md-option ng-repeat="retroType in retroTypes" value="{{retroType.retroTypeKey}}">
+                <md-option ng-repeat="retroType in retroTypes" ng-value="retroType.retroTypeId">
                   {{retroType.name}}
                 </md-option>
               </md-select>

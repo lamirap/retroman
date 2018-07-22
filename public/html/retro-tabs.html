@@ -3,57 +3,24 @@
   
   <md-tabs md-dynamic-height md-border-bottom>
         
-   <md-tab label="Start">
-     <md-tab-label>
-         <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="0" ng-click="addPostClicked(0)">
-           <i class="material-icons">add_box</i>
-         </button>
-         <span>Start</span>
-     </md-tab-label>
-  
-     <md-tab-body>
-       <div ng-data="postList"></div>
-       <ul class="posts-container">
-         <li ng-repeat="item in postList" ng-if="item.type == 0" class="post post-{{item.postId}}" >          
-           <message-card item="item"></message-card>
-         </li>
-       </ul>
-     </md-tab-body>
-   </md-tab>
+    <md-tab ng-repeat="(fieldId, name) in currentRetroType.fields" label="{{name}}">
+      <md-tab-label>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="{{fieldId}}" ng-click="addPostClicked(fieldId)">
+            <i class="material-icons">add_box</i>
+          </button>
+          <span>{{name}}</span>
+      </md-tab-label>
    
-   <md-tab label="Stop">
-     <md-tab-label>
-       <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="1" ng-click="addPostClicked(1)">
-         <i class="material-icons">add_box</i>
-       </button>
-       <span>Stop</span>
-     </md-tab-label>
-     
       <md-tab-body>
-       <ul class="posts-container">
-         <li ng-repeat="item in postList" ng-if="item.type == 1" class="post post-{{item.postId}}" >
-           <message-card item="item"></message-card>
-         </li>
-       </ul>
-     </md-tab-body>
-   </md-tab>
-   
-   <md-tab label="Continue">
-     <md-tab-label>
-       <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="2" ng-click="addPostClicked(2)">
-         <i class="material-icons">add_box</i>
-       </button>
-       <span>Continue</span>
-     </md-tab-label>
-
-      <md-tab-body>
-       <ul class="posts-container">
-         <li ng-repeat="item in postList" ng-if="item.type == 2" class="post post-{{item.postId}}" >
-           <message-card item="item"></message-card>
-         </li>
-       </ul>
-     </md-tab-body>
-   </md-tab>
+        <div ng-data="postList"></div>
+        <ul class="posts-container">
+          <li ng-repeat="item in postList" ng-if="item.type == fieldId" class="post post-{{item.postId}}" >          
+            <message-card item="item"></message-card>
+          </li>
+        </ul>
+      </md-tab-body>
+    </md-tab>     
+        
  </md-tabs>
 </div>
     
@@ -63,48 +30,23 @@
     <div class="mdl-cell mdl-cell--12-col">
       <div class="retro-header"> {{retroName}} </div>
     </div>
-    <div class="mdl-cell mdl-cell--4-col">
+    
+    
+    <div ng-repeat="(fieldId, name) in currentRetroType.fields" class="mdl-cell mdl-cell--4-col">
       <div class="addpost">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="0" ng-click="addPostClicked(0)">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="{{fieldId}}" ng-click="addPostClicked(fieldId)">
           <i class="material-icons">add_box</i>
         </button>
-        <h2 class="add" id="0">Start</h2>
+        <h2 class="add" id="{{fieldId}}">{{name}}</h2>
       </div>
       <div ng-data="postList"></div>
       <ul class="posts-container">
-        <li ng-repeat="item in postList" ng-if="item.type == 0" class="post post-{{item.postId}}" >          
+        <li ng-repeat="item in postList" ng-if="item.type == fieldId" class="post post-{{item.postId}}" >          
           <message-card item="item"></message-card>
         </li>
       </ul>
     </div>
     
-    <div class="mdl-cell mdl-cell--4-col">
-      <div class="addpost">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="1" ng-click="addPostClicked(1)">
-          <i class="material-icons">add_box</i>
-        </button>
-        <h2 class="add" id="1">Stop</h2>
-      </div>
-      <ul class="posts-container">
-        <li ng-repeat="item in postList" ng-if="item.type == 1" class="post post-{{item.postId}}" >
-          <message-card item="item"></message-card>
-        </li>
-      </ul>
-    </div>
-    
-    <div class="mdl-cell mdl-cell--4-col">
-      <div class="addpost">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="2" ng-click="addPostClicked(2)">
-          <i class="material-icons">add_box</i>
-        </button>
-        <h2 class="add" id="2">Continue</h2>
-      </div>
-      <ul class="posts-container">
-        <li ng-repeat="item in postList" ng-if="item.type == 2" class="post post-{{item.postId}}" >
-          <message-card item="item"></message-card>
-        </li>
-      </ul>
-    </div>
     
   </div>
 </div>

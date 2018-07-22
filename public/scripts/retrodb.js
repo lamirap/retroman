@@ -162,9 +162,9 @@ angular.module('retroman')
           retroType.name = data.val().name;
           retroType.count = data.val().count;
           retroType.fields = data.val().fields;
-          retroType.retroTypeKey = data.key;
+          retroType.retroTypeId = data.val().retroTypeId;
           
-          //console.log("Calling new retroType");
+          console.log("Calling new retroType");
           onNewRetroType(retroType);
         });
       });

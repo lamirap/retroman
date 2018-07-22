@@ -9,12 +9,12 @@ angular.module('retroman')
     $scope.getRetros = function() {
       
       var userId = firebase.auth().currentUser.uid;
-      console.debug(userId);
+      //console.debug(userId);
       
       var userRetrosRef = firebase.database().ref('/user-retros/' + userId + '/');
       
       userRetrosRef.on('child_added', function(data) {
-        console.debug('Child added ', data);
+        //console.debug('Child added ', data);
         var retro = {};
 
         retro.name = data.val().name;
@@ -28,7 +28,7 @@ angular.module('retroman')
       });
       
       userRetrosRef.on('child_removed', function(data) {
-        console.debug('Child removed ', data);
+        //console.debug('Child removed ', data);
         for(var i = 0; i < $scope.retroList.length; i += 1) {
           if($scope.retroList[i].retroKey === data.key) {
             $timeout(function() {        
@@ -41,16 +41,14 @@ angular.module('retroman')
       
     }
 
-    $scope.getRetroTypes = function() {
-      
-      $scope.onNewRetroType = function(retroType) {
+    $scope.getRetroTypes = function() {    
+      retrodb.getRetroTypes(function(retroType) {
         //console.log("New retro type called", retroType);
         $timeout(function() {
           $scope.retroTypes.unshift(retroType);
+          console.log(retroType);
         }, 0);
-      }
-      
-      retrodb.getRetroTypes($scope.onNewRetroType);
+      });
     }
 
     $scope.addRetroClicked = function() {
@@ -90,14 +88,14 @@ angular.module('retroman')
       });
     }
     
-    function saveNewRetro(userId, name, retroType) {
+    function saveNewRetro(userId, name, retroTypeId) {
       // Get a key for a new Post.
       var retro = {};
 
       retro.name = name;
       retro.retroId = Math.random().toString(36).substr(2, 6);
       retro.uid = userId;
-      retro.retroType = retroType;
+      retro.retroTypeId = retroTypeId;
       
       retro.newRetroKey = firebase.database().ref().child('/retros/' + retro.retroId + '/').push().key;
             
