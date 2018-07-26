@@ -1,15 +1,18 @@
 <md-card>
+  
   <md-card-title>
     <md-card-title-text>
       <span class="md-headline">{{retro.name}} </span>
       <span class="md-subhead">
-        <a ng-href='/#!/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
+        Retro Link - <a ng-href='/#!/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
       </span>
+      <span class="md-subhead"> Retro Type - {{ retroTypes[retro.retroTypeId].name }} </span>
     </md-card-title-text>
     <md-card-title-media>
       <div id="retro-qrcode" class="md-media-sm card-media" width="50%"></div>
     </md-card-title-media>
   </md-card-title>
+    
   <md-card-actions layout="row" layout-align="end center">
     <a ng-href='/#!/home/{{retro.retroId}}' class="md-button"> Goto Retro </a>
     <md-button ng-click="deleteRetroClicked(retro)">

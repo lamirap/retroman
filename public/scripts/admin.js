@@ -19,6 +19,7 @@ angular.module('retroman')
 
         retro.name = data.val().name;
         retro.retroId = data.val().retroId;
+        retro.retroTypeId = data.val().retroTypeId;
         retro.retroKey = data.key;
         
         $timeout(function() {
