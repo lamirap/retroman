@@ -225,11 +225,15 @@ a {
 }
 
 .addpost h2 {
-  font-size: 16px;
-  line-height: 20px;
+  font-family: Arial;
+  font-size: 14px;
+  line-height: 24px;
   display: inline-block;
   text-align: center;
   margin: 0px 0px 0px 20px;
+  width: auto;
+  text-transform: uppercase;
+  color: rgb(63,81,181);
 }
 
 .retro-container {
