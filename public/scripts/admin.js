@@ -89,6 +89,15 @@ angular.module('retroman')
       });
     }
     
+    $scope.getRetroTypeName = function(retroTypeId) {
+      for(var i = 0; i < $scope.retroTypes.length; i += 1) {
+        if($scope.retroTypes[i].retroTypeId === retroTypeId) {
+            return $scope.retroTypes[i].name;
+        }
+      }  
+      return "Unknown";
+    }
+    
     function saveNewRetro(userId, name, retroTypeId) {
       // Get a key for a new Post.
       var retro = {};
