@@ -1,6 +1,25 @@
+
+<div>
+
+  <div class="ng-scope layout-row">
+
+    <div class="flex">
+      <div class="retro-header">
+        {{retroName}}
+      </div>
+    </div>
+    
+    <div class="flex-30">
+      <md-radio-group class="sort-by" ng-model="sortBy" layout="row" ng-change='sortByChanged(sortBy)'>
+        <md-radio-button value="0" class="md-primary">Latest</md-radio-button>
+        <md-radio-button value="1"> Most Votes </md-radio-button>
+      </md-radio-group>
+    </div>
+  </div>
+</div>
+
 <div ng-if="includeMobileTemplate" ng-show="showRecentPosts">
-  <div class="retro-header-mobile"> {{retroName}} </div>
-  
+    
   <md-tabs md-dynamic-height md-border-bottom>
         
     <md-tab ng-repeat="(fieldId, name) in currentRetroType.fields" label="{{name}}">
@@ -27,11 +46,6 @@
 <div ng-if="includeDesktopTemplate" ng-show="showRecentPosts">
   <!-- Show a list of recent posts -->
   <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col">
-      <div class="retro-header"> {{retroName}} </div>
-    </div>
-    
-    
     <div ng-repeat="(fieldId, name) in currentRetroType.fields" class="mdl-cell mdl-cell--4-col">
       <div class="addpost">
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="{{fieldId}}" ng-click="addPostClicked(fieldId)">

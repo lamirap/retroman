@@ -5,7 +5,8 @@ angular.module('retroman')
   
     $scope.retroId = 0;
     $scope.retroTypes = [];
-  
+    $scope.sortBy = 0;
+    
     retrodb.getRetroTypes(function(retroType) {
       //console.log("New retro type called", retroType);
       $timeout(function() {
@@ -80,11 +81,14 @@ angular.module('retroman')
      */
     function startDatabaseQueries() {
                   
-      // [START recent_posts_query]
-      var recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
-      //var recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('starCount').limitToLast(100);
-      // [END recent_posts_query]
-
+      var recentPostsRef;
+      
+      if ($scope.sortBy == 0) {
+        recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
+      } else {
+        recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('starCount').limitToLast(100);
+      }
+      
       // Fetching and displaying all posts of each sections.
       recentPostsRef.on('child_added', function(data) {
         //console.debug('Child added');
@@ -174,6 +178,20 @@ angular.module('retroman')
       });
       $scope.listeningFirebaseRefs = [];
     }
+
+    $scope.sortByChanged = function(newValue) {
+      $scope.sortBy = newValue;
+      
+      console.log("SortBy changed");
+      $scope.postList = []
+      
+      $scope.listeningFirebaseRefs.forEach(function(ref) {
+        ref.off();
+      });
+      $scope.listeningFirebaseRefs = [];
+
+      startDatabaseQueries();
+     }
 
     /**
      * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
