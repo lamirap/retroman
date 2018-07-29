@@ -1,14 +1,14 @@
 
 <div ng-show="showRecentPosts" class="ng-scope layout-row">
 
-  <div class="flex">
+  <div class="flex-70">
     <div class="retro-header">
       {{retroName}}
     </div>
   </div>
   
-  <div class="flex-30">
-    <md-radio-group class="sort-by" ng-model="sortBy" layout="row" ng-change='sortByChanged(sortBy)'>
+  <div class="flex-50">
+    <md-radio-group class="retro-header sort-by" ng-model="sortBy" layout="row" ng-change='sortByChanged(sortBy)'>
       <md-radio-button value="0" class="md-primary">Latest</md-radio-button>
       <md-radio-button value="1"> Most Votes </md-radio-button>
     </md-radio-group>
