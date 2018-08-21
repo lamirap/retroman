@@ -16,18 +16,26 @@ angular.module('retroman')
     
     $scope.$on('$routeChangeSuccess', function() {
       $scope.retroId = $routeParams.retroId;
-      
       //console.debug($scope.retroId);
       
       if (!$scope.retroId) {
+
         $timeout(function() {
-          $scope.showRetroSelector = true;
-          $scope.showRecentPosts = false;
+            $scope.showRetroSelector = true;
+            $scope.showRecentPosts = false;
         }, 0);
+
       } else {
         firebase.database().ref('/retros/' + $scope.retroId).once('value').then(function(snapshot) {
           if (!snapshot.exists()) {
-            $mdDialog.show(
+
+              $timeout(function() {
+                  $('#RetroNotFoundModal').modal('show');
+                  $scope.showRetroSelector = true;
+                  $scope.showRecentPosts = false;
+              }, 0);
+
+            /*$mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(true)
                 .title('Retro not found')
@@ -39,7 +47,8 @@ angular.module('retroman')
                 $scope.showRetroSelector = true;
                 $scope.showRecentPosts = false;
               }, 0);
-            });
+            });*/
+
           } else {
             console.debug('Retro found', snapshot.val().name, snapshot.val().retroTypeId);
             $timeout(function() {

@@ -6,7 +6,7 @@ angular.module('retroman')
         restrict: 'E',
         link: link,
         templateUrl: 'html/retro-tabs.html'
-        }
+    }
     
     function link(scope, element, attrs) {      
         function checkTemplateVisible(event) {

@@ -1,63 +1,89 @@
-
-<div ng-show="showRecentPosts" class="ng-scope layout-row">
-
-  <div class="flex-70">
-    <div class="retro-header">
-      {{retroName}}
+<div class="container-fluid" ng-show="showRecentPosts">
+  <div class="row my-4">
+    <div class="col-9">
+      <h1>{{retroName}}</h1>
+    </div>
+    <div class="col-3">
+      <select class="custom-select" ng-model="sortBy" ng-change="sortByChanged(sortBy)">
+        <option value="0" selected>View by latest post</option>
+        <option value="1">View by most popular</option>
+      </select>
     </div>
   </div>
-  
-  <div class="flex-50">
-    <md-radio-group class="retro-header sort-by" ng-model="sortBy" layout="row" ng-change='sortByChanged(sortBy)'>
-      <md-radio-button value="0" class="md-primary">Latest</md-radio-button>
-      <md-radio-button value="1"> Most Votes </md-radio-button>
-    </md-radio-group>
-  </div>
 </div>
 
-<div ng-if="includeMobileTemplate" ng-show="showRecentPosts">
-    
-  <md-tabs md-dynamic-height md-border-bottom>
-        
-    <md-tab ng-repeat="(fieldId, name) in currentRetroType.fields" label="{{name}}">
-      <md-tab-label>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="{{fieldId}}" ng-click="addPostClicked(fieldId)">
-            <i class="material-icons">add_box</i>
-          </button>
-          <span>{{name}}</span>
-      </md-tab-label>
-   
-      <md-tab-body>
-        <div ng-data="postList"></div>
-        <ul class="posts-container">
-          <li ng-repeat="item in postList" ng-if="item.type == fieldId" class="post post-{{item.postId}}" >          
-            <message-card item="item"></message-card>
-          </li>
-        </ul>
-      </md-tab-body>
-    </md-tab>     
-        
- </md-tabs>
-</div>
-    
-<div ng-if="includeDesktopTemplate" ng-show="showRecentPosts">
-  <!-- Show a list of recent posts -->
-  <div class="mdl-grid">
-    <div ng-repeat="(fieldId, name) in currentRetroType.fields" class="mdl-cell mdl-cell--4-col">
-      <div class="addpost">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect add" id="{{fieldId}}" ng-click="addPostClicked(fieldId)">
-          <i class="material-icons">add_box</i>
-        </button>
-        <h2 class="add" id="{{fieldId}}">{{name}}</h2>
+<div class="container-fluid" ng-show="showRecentPosts">
+  <div class="row">
+    <div class="col">
+      <div ng-if="includeMobileTemplate">
+        <div class="tabbable tabs-below" ng-init="selectedTab = 0;">
+          <!-- I ended up hard coding hahahaha -->
+          <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item">
+              <a class="nav-link" ng-class="{active: selectedTab == 0}" href="" ng-click="selectedTab = 0;">Glad</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" ng-class="{active: selectedTab == 1}"  href="" ng-click="selectedTab = 1;">Sad</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" ng-class="{active: selectedTab == 2}"  href="" ng-click="selectedTab = 2;">Mad</a>
+            </li>
+          </ul>
+          <div class="tab-content" ng-repeat="(fieldId, name) in currentRetroType.fields" ng-show="selectedTab == fieldId">
+            <button class="btn btn-primary" id="fieldId" ng-click="addPostClicked(fieldId)">
+              New Post
+            </button>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
+                <message-card item="item"></message-card>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div ng-data="postList"></div>
-      <ul class="posts-container">
-        <li ng-repeat="item in postList" ng-if="item.type == fieldId" class="post post-{{item.postId}}" >          
-          <message-card item="item"></message-card>
-        </li>
-      </ul>
+      <div ng-if="includeDesktopTemplate">
+        <div class="row">
+          <div class="col">
+            <div class="addpost mb-3">
+              <h4 class="text-info text-center my-3">Glad</h4>
+              <button class="btn btn-info btn-lg btn-block" id="0" ng-click="addPostClicked(0)">
+                Add Post
+              </button>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == 0">
+                <message-card item="item"></message-card>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="addpost mb-3">
+              <h4 class="text-info text-center my-3">Sad</h4>
+              <button class="btn btn-info btn-lg btn-block" id="1" ng-click="addPostClicked(1)">
+                Add Post
+              </button>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == 1">
+                <message-card item="item"></message-card>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="addpost mb-3">
+              <h4 class="text-info text-center my-3">Mad</h4>
+              <button class="btn btn-info btn-lg btn-block" id="2" ng-click="addPostClicked(2)">
+                Add Post
+              </button>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == 2">
+                <message-card item="item"></message-card>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    
   </div>
 </div>

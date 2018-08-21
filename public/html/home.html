@@ -1,86 +1,72 @@
-
-
-<div class="mdl-layout__content mdl-color--grey-100">
-  <!-- Show the add post form -->
-  <section class="mdl-grid" ng-show="showRetroSelector">
-    
-    <div class="mdl-layout-spacer"></div>
-    
-    <div class="mdl-cell mdl-cell--6-col">      
-      <!-- Card containing the inputs to add a new messages -->
-      <div class="mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-          <h2 class="mdl-card__title-text">Enter RetroID</h2>
+<div class="container" ng-show="showRetroSelector">
+  <div class="row">
+    <div class="col">
+      <form id="retroid-form" name="retroform">
+        <div class="form-group">
+          <h4 class="text-info my-3">Enter Retro ID</h4>
+          <input rows="1" class="form-control form-control-lg mb-3" name="retroIdInput" ng-model="retroIdInput" ng-minlength=6 ng-maxlength=8 required>
+          <div class="mb-3" ng-show="retroform.retroIdInput.$dirty && retroform.retroIdInput.$invalid">
+            <small ng-show="retroform.retroIdInput.$error.minlength">
+              RetrodID is at least 6 characters
+            </small>
+            <small ng-show="retroform.retroIdInput.$error.maxlength">
+              RetrodID is max 8 characters
+            </small>
+          </div>
+          <button type="submit" class="btn btn-secondary btn-lg" ng-click="retroIdSubmit()" ng-disabled="retroform.$invalid">
+            Enter Retro
+          </button>
         </div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <form id="retroid-form" name="retroform">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" rows="1" name="retroIdInput" ng-model="retroIdInput" placeholder="RetroId ..." ng-minlength=6 ng-maxlength=8 required></textarea>
-            </div>
-            
-            <div class="error" ng-show="retroform.retroIdInput.$dirty && retroform.retroIdInput.$invalid">
-              <small class="error" ng-show="retroform.retroIdInput.$error.minlength">
-                  RetrodID is at least 6 characters
-              </small>
-              <small class="error" ng-show="retroform.retroIdInput.$error.maxlength">
-                  RetrodID is max 8 characters
-              </small>
-            </div>
-            
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="retroIdSubmit()" ng-disabled="retroform.$invalid">
-              Go To Retro
-            </button>
-          </form>
-        </div>
-      </div>
+      </form>
     </div>
-
-    <div class="mdl-layout-spacer"></div>
-    
-  </section>
-  
-  <section class="mdl-grid" ng-show="showAddPost">
-    
-    <div class="mdl-layout-spacer"></div>
-
-    <div class="mdl-cell mdl-cell--6-col">      
-      <!-- Card containing the inputs to add a new messages -->
-      <div class="mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-          <h2 class="mdl-card__title-text">New Post</h2>
-        </div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <form id="message-form" name="msgform">
-            <input class="mdl-textfield__input" type="hidden" id="new-post-type" ng-model="typeInput">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" rows="3" id="new-post-message" name="messageInput" ng-model="messageInput" placeholder="Post message ..." ng-minlength=20 ng-maxlength=1024></textarea>
-            </div>
-            
-            <div class="error" ng-show="msgform.messageInput.$dirty && msgform.messageInput.$invalid">
-              <small class="error" ng-show="msgform.messageInput.$error.minlength">
-                  Post must be at least 20 characters
-              </small>
-              <small class="error" ng-show="msgform.messageInput.$error.maxlength">
-                  Post should be max 1024 characters
-              </small>
-            </div>
-
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="backClicked()">
-              Back
-            </button>
-            
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="formSubmit()" ng-disabled="msgform.$invalid">
-              Add post
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-    
-    <div class="mdl-layout-spacer"></div>
-
-  </section>
-
-  <retro-tabs></retro-tabs>
-
+  </div>
 </div>
+
+<div class="container" ng-show="showAddPost">
+  <div class="row">
+    <div class="col">
+      <form id="message-form" name="msgform">
+        <div class="form-group">
+          <h4 class="text-info my-3">Add New Post</h4>
+          <input class="form-control form-control-lg mb-3" rows="3" id="new-post-message" name="messageInput" ng-model="messageInput" placeholder="Post message ..." ng-minlength=20 ng-maxlength=1024>
+          <div class="mb-3" ng-show="msgform.messageInput.$dirty && msgform.messageInput.$invalid">
+            <small ng-show="msgform.messageInput.$error.minlength">
+              Post must be at least 20 characters
+            </small>
+            <small ng-show="msgform.messageInput.$error.maxlength">
+              Post should be max 1024 characters
+            </small>
+          </div>
+          <button class="btn btn-secondary btn-lg" ng-click="backClicked()">
+            Back
+          </button>
+          <button type="submit" class="btn btn-info btn-lg" ng-click="formSubmit()" ng-disabled="msgform.$invalid">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="RetroNotFoundModal" tabindex="-1" role="dialog" aria-labelledby="RetroNotFoundModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="RetroNotFoundModalLabel">Retro not found</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        No such retro with retroId - {{retroId}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<retro-tabs></retro-tabs>
+

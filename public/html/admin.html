@@ -1,78 +1,37 @@
-<div class="mdl-layout__content mdl-color--grey-100">
-
-  <section class="mdl-grid" ng-show="showRetroList">
-    <div class="mdl-layout-spacer"></div>
-    
-    <div class="mdl-cell--6-col">
-      <div class="retro-title"> My Retros List</div>
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect retro-add" ng-click="addRetroClicked()">
-        <i class="material-icons">add_box</i>
+<div class="container" ng-show="showRetroList">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-info btn-lg btn-block mb-3 mt-3" id="anon-sign-in-button" ng-click="addRetroClicked()">
+        <b>Add New Retro Card</b>
       </button>
-
-
-      <ul class="retro-container">
-        <li ng-repeat="retro in retroList" class="retro">
-          <retro-card retro="retro"></retro-card>
-        </li>
-      </ul>
     </div>
-    
-    <div class="mdl-layout-spacer"></div>
+  </div>
+</div>
 
-  </section>
-
-  <!-- Show the add post form -->
-  <section class="mdl-grid" ng-show="showAddRetro">
-    <div class="mdl-layout-spacer"></div>
-    
-    <div class="mdl-cell mdl-cell--6-col">      
-      <!-- Card containing the inputs to add a new messages -->
-      <div class="mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-          <h2 class="mdl-card__title-text">New Retro</h2>
-        </div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          
-          
-          
-          
-          <form name="retrocreateform">
-            
-            <md-input-container class="md-block">
-              <label>Retro Name:</label>
-              <textarea class="mdl-textfield__input" name="retroName" ng-model="retroName" placeholder="Retro Name ..." ng-minlength=8 ng-maxlength=20 md-select-on-focus></textarea>
-            </md-input-container>
-            
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>Retro Type:</label>
-              <md-select ng-model="selectedRetroType">
-                <md-option ng-repeat="retroType in retroTypes" ng-value="retroType.retroTypeId">
-                  {{retroType.name}}
-                </md-option>
-              </md-select>
-            </md-input-container>
-
-            <div class="error" ng-show="retrocreateform.retroName.$dirty && retrocreateform.retroName.$invalid">
-              <small class="error" ng-show="retrocreateform.retroName.$error.minlength">
-                  Retro name is at least 8 characters
-              </small>
-              <small class="error" ng-show="retrocreateform.retroName.$error.maxlength">
-                  Retro name is max 20 characters
-              </small>
-            </div>
-            
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="backClicked()" >
-              Back
-            </button>
-            
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" ng-click="createRetro()" ng-disabled="retrocreateform.$invalid">
-              Add Retro
-            </button>
-          </form>
-        </div>
+<div class="container-fluid" ng-show="showRetroList">
+  <div class="row text-center">
+    <div class="col">
+      <div ng-repeat="retro in retroList" style="display: inline-block">
+        <retro-card retro="retro"></retro-card>
       </div>
     </div>
-    
-    <div class="mdl-layout-spacer"></div>
-  </section>
+  </div>
+</div>
+
+<div class="container" ng-show="showAddRetro">
+  <div class="row">
+    <div class="col">
+      <h4 class="text-info my-3">Create Retro Card</h4>
+      <form>
+        <div class="form-group" name="retrocreateform">
+          <input class="form-control form-control-lg mb-3" type="text" placeholder="Enter Retro Card Name" ng-model="retroName" ng-minlength=8 ng-maxlength=20>
+          <select class="form-control form-control-lg" ng-model="selectedRetroType">
+            <option ng-repeat="retroType in retroTypes" ng-value="retroType.retroTypeId">{{retroType.name}}</option>
+          </select>
+        </div>
+        <button class="btn btn-secondary btn-lg" ng-click="backClicked()">Back</button>
+        <button class="btn btn-info btn-lg" type="submit" ng-click="createRetro()" ng-disabled="retrocreateform.$invalid">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>

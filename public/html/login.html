@@ -1,11 +1,24 @@
-<!-- Splash screen -->
-<section id="page-splash">
-  <h3 class="logo">retroman</h3>
-  <div>
-    <button id="sign-in-button" ng-click="signInClicked()" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign in with Google</button>
+<div id="page-splash">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">I am Retroman. How can I help you?</h1>
+      <p class="lead">Think like a proton. Always positive.</p>
+    </div>
   </div>
-  <div>
-    <button id="anon-sign-in-button" ng-click="anonSignInClicked()" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect">
-      <i class="material-icons">account_circle</i> Anonymous Login</button>
+  <div class="container">
+    <div class="row text-center">
+      <div class="col">
+        <button type="button" class="btn btn-info btn-lg btn-block mb-3" id="sign-in-button" ng-click="signInClicked()">
+          <b>Create a Retro Board</b><br>
+          <small>(require a Google account to log in)</small>
+        </button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-info btn-lg btn-block mb-3" id="anon-sign-in-button" ng-click="anonSignInClicked()">
+          <b>Join a Retro Board</b><br>
+          <small>(require Retro ID to participate)</small>
+        </button>
+      </div>
+    </div>
   </div>
-</section>
+</div>

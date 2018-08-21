@@ -2,6 +2,9 @@
 
 var myAPP = angular.module('retroman', [ 'ngRoute', 'ngMaterial', 'ngAnimate' ]);
 
+/* Disable css injection from material  */
+myAPP.constant("$MD_THEME_CSS","");
+
 myAPP.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
         when('/home', {

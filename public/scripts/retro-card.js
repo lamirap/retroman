@@ -10,9 +10,9 @@ angular.module('retroman')
           
           $scope.retro.retroQR = new QRCode(document.getElementById("retro-qrcode"), {
             text: window.location.origin + "/#!/home/" + $scope.retro.retroId,
-            width: 128,
-            height: 128,
-            colorDark : "#000000",
+            width: 80,
+            height: 80,
+            colorDark : "#666666",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.H
           });

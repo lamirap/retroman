@@ -7,36 +7,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Tool for retrospectives">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>retroman</title>
+  <title>RETROMAN</title>
 
-  <!-- Disable tap highlight on IE -->
-  <meta name="msapplication-tap-highlight" content="no">
+  <!-- Disable cache -->
+  <meta http-equiv="Cache-control" content="no-cache">
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="retroman">
-  <meta name="theme-color" content="#303F9F">
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Firebase Database Quickstart">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
-
-  <!-- Tile icon for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
-  <meta name="msapplication-navbutton-color" content="#303F9F">
-
-  <!-- Material Design Lite -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
+  <!-- Bootstrap 4 style sheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <link rel="stylesheet" href="css/main.css">
-  
-    
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
@@ -46,9 +26,7 @@
 
   <!-- Angular Material Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
-        
   <script type="text/javascript" src='scripts/third-party/qrcode.js'></script>
-  
   <script type="text/javascript" src='scripts/app.js'></script>
   <script type="text/javascript" src='scripts/retrodb.js'></script>
   <script type="text/javascript" src='scripts/home.js'></script>
@@ -62,28 +40,29 @@
 </head>
 
 <body ng-app="retroman">
-  
-  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <!-- Header section containing logo and menu -->
-    <header class="header mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
-      <div class="mdl-layout__header-row">
-        <a class="logo" ng-href="#!/home"><h3>retroman</h3></a>
-        <a href="#!/admin" id="admin-button" ng-show="showAdmin" class="mdl-button--fab mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">settings</i>
-        </a>
-        <a href="#!/logout" id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">account_circle</i> Sign out
-        </a>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">RETROMAN</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    </header>
-  
-    <div ng-view>
-    </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" ng-href="#!/admin" ng-show="showAdmin">My Retro Cards</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" ng-href="/" ng-show="showAdmin">Join a Retro</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" ng-href="#!/logout">Logout</a>
+      </li>
+    </ul>
   </div>
-  
-</div>
+</nav>
+
+<div ng-view></div>
 
 <!-- Import and configure the Firebase SDK -->
 <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
@@ -92,6 +71,11 @@
 <script src="/__/firebase/3.9.0/firebase-auth.js"></script>
 <script src="/__/firebase/3.9.0/firebase-database.js"></script>
 <script src="/__/firebase/init.js"></script>
+
+<!-- Bootstrap 4 Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 </body>
 </html>

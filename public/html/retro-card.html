@@ -1,24 +1,12 @@
-<md-card>
-  
-  <md-card-title>
-    <md-card-title-text>
-      <span class="md-headline">{{retro.name}} </span>
-      <span class="md-subhead">
-        Retro Link - <a ng-href='/#!/home/{{retro.retroId}}'> {{ retro.retroId }} </a>
-      </span>
-      <span class="md-subhead"> Retro Type - {{ getRetroTypeName(retro.retroTypeId) }} </span>
-    </md-card-title-text>
-    <md-card-title-media>
-      <div id="retro-qrcode" class="md-media-sm card-media" width="50%"></div>
-    </md-card-title-media>
-  </md-card-title>
-    
-  <md-card-actions layout="row" layout-align="end center">
-    <a ng-href='/#!/home/{{retro.retroId}}' class="md-button"> Goto Retro </a>
-    <md-button ng-click="deleteRetroClicked(retro)">
-      Delete
-    </md-button>
-  </md-card-actions>
-</md-card>
-
-
+<div class="card mx-1 my-1" style="width: 15rem;">
+  <div class="mx-auto mt-3">
+    <div id="retro-qrcode"></div>
+  </div>
+  <div class="card-body">
+    <h4 class="card-title text-info"><b>{{retro.name}}</b></h4>
+    <small class="card-text">{{ getRetroTypeName(retro.retroTypeId) }}</small>
+    <p><span class="badge badge-dark">{{retro.retroId}}</span></p>
+    <a class="btn btn-info" ng-href="/#!/home/{{retro.retroId}}">Enter Retro</a>
+    <button class="btn btn-secondary" ng-click="deleteRetroClicked(retro)">Delete</button>
+  </div>
+</div>

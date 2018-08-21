@@ -1,12 +1,11 @@
-
-<div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>
-<div class="username mdl-color-text--black"> {{item.username}} </div>
-<button class="mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp mdl-js-ripple-effect deletebtn"  ng-click="deletePostClicked(item, retroId)">
-  <i class="material-icons">highlight_off</i>
-</button>
-<div class="stars">
-  <div class="not-starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == false"> star_border </div>
-  <div class="starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == true"> star </div>
-  <div class="star-count"> {{item.starCount}} </div>
+<div class="row">
+  <!--<div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>-->
+  <div class="col">
+    <h5>{{item.username}}</h5>
+    <p>{{item.text}}</p>
+    <a href="" class="btn btn-primary" ng-click="deletePostClicked(item, retroId)">Delete</a>
+    <div class="not-starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == false"> star_border </div>
+    <div class="starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == true"> star </div>
+    <div class="star-count"> {{item.starCount}} </div>
+  </div>
 </div>
-<div class="message-text text"> {{item.text}}</div>
