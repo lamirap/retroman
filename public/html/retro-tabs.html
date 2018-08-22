@@ -13,71 +13,42 @@
 </div>
 
 <div class="container-fluid" ng-show="showRecentPosts">
+
   <div class="row">
     <div class="col">
       <div ng-if="includeMobileTemplate">
-        <div class="tabbable tabs-below" ng-init="selectedTab = 0;">
-          <!-- I ended up hard coding hahahaha -->
+        <div class="tabbable tabs-below">
           <ul class="nav nav-tabs nav-justified">
-            <li class="nav-item">
-              <a class="nav-link" ng-class="{active: selectedTab == 0}" href="" ng-click="selectedTab = 0;">Glad</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" ng-class="{active: selectedTab == 1}"  href="" ng-click="selectedTab = 1;">Sad</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" ng-class="{active: selectedTab == 2}"  href="" ng-click="selectedTab = 2;">Mad</a>
+            <li class="nav-item" ng-repeat="(fieldId, name) in currentRetroType.fields" ng-class="getTabClass(fieldId)" ng-click="setActiveTab(fieldId)">
+              <a class="nav-link" data-toggle="tab" data-target="#tab-{{fieldId}}">{{name}}</a>
             </li>
           </ul>
-          <div class="tab-content" ng-repeat="(fieldId, name) in currentRetroType.fields" ng-show="selectedTab == fieldId">
-            <button class="btn btn-primary" id="fieldId" ng-click="addPostClicked(fieldId)">
-              New Post
-            </button>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
-                <message-card item="item"></message-card>
-              </li>
-            </ul>
+          
+          <div class="tab-content">
+            <div ng-repeat="(fieldId, name) in currentRetroType.fields" id="tab-{{fieldId}}" ng-class="getTabPaneClass(fieldId)"> 
+              <button class="btn btn-primary" ng-click="addPostClicked(fieldId)">
+                New Post
+              </button>
+              <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
+                  <message-card item="item"></message-card>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
       <div ng-if="includeDesktopTemplate">
         <div class="row">
-          <div class="col">
+          <div class="col" ng-repeat="(fieldId, name) in currentRetroType.fields">
             <div class="addpost mb-3">
-              <h4 class="text-info text-center my-3">Glad</h4>
-              <button class="btn btn-info btn-lg btn-block" id="0" ng-click="addPostClicked(0)">
+              <h4 class="text-info text-center my-3">{{name}}</h4>
+              <button class="btn btn-info btn-lg btn-block" ng-click="addPostClicked(fieldId)">
                 Add Post
               </button>
             </div>
             <ul class="list-group">
-              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == 0">
-                <message-card item="item"></message-card>
-              </li>
-            </ul>
-          </div>
-          <div class="col">
-            <div class="addpost mb-3">
-              <h4 class="text-info text-center my-3">Sad</h4>
-              <button class="btn btn-info btn-lg btn-block" id="1" ng-click="addPostClicked(1)">
-                Add Post
-              </button>
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == 1">
-                <message-card item="item"></message-card>
-              </li>
-            </ul>
-          </div>
-          <div class="col">
-            <div class="addpost mb-3">
-              <h4 class="text-info text-center my-3">Mad</h4>
-              <button class="btn btn-info btn-lg btn-block" id="2" ng-click="addPostClicked(2)">
-                Add Post
-              </button>
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == 2">
+              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
                 <message-card item="item"></message-card>
               </li>
             </ul>

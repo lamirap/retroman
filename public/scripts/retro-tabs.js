@@ -38,5 +38,29 @@ angular.module('retroman')
         
         scope.$on('$destroy', cleanUp);
         checkTemplateVisible();
+        
+        var tabClasses;
+  
+        function initTabs() {
+          tabClasses = ["","","",""];
+        }
+        
+        scope.getTabClass = function (tabNum) {
+          return tabClasses[tabNum];
+        };
+        
+        scope.getTabPaneClass = function (tabNum) {
+          return "tab-pane " + tabClasses[tabNum];
+        }
+        
+        scope.setActiveTab = function (tabNum) {
+          console.log("Set Active Tab ", tabNum);
+          initTabs();
+          tabClasses[tabNum] = "active";
+        };
+        
+        //Initialize 
+        initTabs();
+        scope.setActiveTab(0);
     }
 }]);
