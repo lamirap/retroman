@@ -5,7 +5,7 @@ angular.module('retroman')
   
     $scope.retroId = 0;
     $scope.retroTypes = [];
-    $scope.sortBy = 0;
+    $scope.sortBy = "0";
     
     retrodb.getRetroTypes(function(retroType) {
       //console.log("New retro type called", retroType);
@@ -92,7 +92,7 @@ angular.module('retroman')
                   
       var recentPostsRef;
       
-      if ($scope.sortBy == 0) {
+      if ($scope.sortBy == "0") {
         recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
       } else {
         recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('starCount').limitToLast(100);
