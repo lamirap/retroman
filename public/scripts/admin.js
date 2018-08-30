@@ -5,6 +5,7 @@ angular.module('retroman')
     $scope.retroList = [];
     $scope.currentUID = null;
     $scope.retroTypes = [];
+    $scope.alertmessages = [];
 
     $scope.getRetros = function() {
       
@@ -70,23 +71,11 @@ angular.module('retroman')
       $scope.showRetroList = true;
       $scope.retroName = "";
       
-      $mdDialog.show(
-        $mdDialog.confirm()
-          .clickOutsideToClose(true)
-          .title('Retro created successfully')
-          .textContent('New retroId - ' + retroId)
-          .ariaLabel('Success')
-          .ok('Got it!')
-          .cancel('Go to new retro')
-      ).then(function() {
-        console.debug('Back to admin screen');
-      }, function() {
-        console.debug('Go to retro page' + "/#!/home/" + retroId);
-        
-        $timeout(function() {
-          $location.path('/home/' + retroId);
-        }, 0);      
-      });
+      $scope.alertmessages.unshift({content: "Retro created successfully", type: "success"});
+      
+      $timeout(function() {
+        $scope.alertmessages = [];
+      }, 3000);
     }
     
     $scope.getRetroTypeName = function(retroTypeId) {
@@ -122,6 +111,13 @@ angular.module('retroman')
     $scope.deleteRetroClicked = function(retro) {
       console.debug("Deleting retro now");
       retrodb.deleteRetro(retro);      
+      
+      $scope.alertmessages.unshift({content: "Retro deleted", type: "danger"});
+      
+      $timeout(function() {
+        $scope.alertmessages = [];
+      }, 3000);
+
     }
 
     $scope.backClicked = function() {
