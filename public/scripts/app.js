@@ -1,9 +1,6 @@
 'use strict';
 
-var myAPP = angular.module('retroman', [ 'ngRoute', 'ngMaterial', 'ngAnimate' ]);
-
-/* Disable css injection from material  */
-myAPP.constant("$MD_THEME_CSS","");
+var myAPP = angular.module('retroman', [ 'ngRoute', 'ngAnimate' ]);
 
 myAPP.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.

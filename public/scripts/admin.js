@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('retroman')
- .controller('AdminController', function ($scope, $rootScope, $timeout, $location, $mdDialog, retrodb) {
+ .controller('AdminController', function ($scope, $rootScope, $timeout, $location, retrodb) {
     $scope.retroList = [];
     $scope.currentUID = null;
     $scope.retroTypes = [];
@@ -146,18 +146,14 @@ angular.module('retroman')
         $rootScope.showAdmin = !user.isAnonymous;
         
         if (user.isAnonymous) {
-          $mdDialog.show(
-            $mdDialog.alert()
-              .clickOutsideToClose(true)
-              .title('Sign-in')
-              .textContent('Login to create new retro')
-              .ariaLabel('Login')
-              .ok('Got it!')
-          ).then(function() {
-            $timeout(function() {
-              $location.path("/home");
-            }, 0);      
-          });
+          var alertmsg = {content: "Login to create new retro", type: "danger"};
+          $scope.alertmessages.unshift(alertmsg);
+           
+           $timeout(function() {
+            $scope.alertmessages.splice($scope.alertmessages.indexOf(alertmsg), 1);
+            $location.path("/home");
+           }, 3000);   
+               
         } else {
           $scope.getRetros();
           $scope.getRetroTypes();

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('retroman')
-  .controller('HomeController', function ($scope, $rootScope, $location, $timeout, $routeParams, $mdDialog, retrodb) {
+  .controller('HomeController', function ($scope, $rootScope, $location, $timeout, $routeParams, retrodb) {
   
     $scope.retroId = 0;
     $scope.retroTypes = [];
@@ -34,21 +34,7 @@ angular.module('retroman')
                   $scope.showRetroSelector = true;
                   $scope.showRecentPosts = false;
               }, 0);
-
-            /*$mdDialog.show(
-              $mdDialog.alert()
-                .clickOutsideToClose(true)
-                .title('Retro not found')
-                .textContent('No such retro with retroId - ' + $scope.retroId)
-                .ariaLabel('Not found')
-                .ok('Got it!')
-            ).then(function() {
-              $timeout(function() {
-                $scope.showRetroSelector = true;
-                $scope.showRecentPosts = false;
-              }, 0);
-            });*/
-
+              
           } else {
             console.debug('Retro found', snapshot.val().name, snapshot.val().retroTypeId);
             $timeout(function() {
