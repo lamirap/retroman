@@ -96,34 +96,6 @@ a {
   list-style: none;
 }
 
-.post .star-count {
-  color: #444;
-  font-weight: bold;
-  display: inline-block;
-  top: -7px;
-  position: relative;
-}
-
-.post .star {
-  position: absolute;
-  top: 10px;
-  right: 0;
-}
-
-.post .star .material-icons {
-  font-size: 20px;
-  color: #ffcb0c;
-  cursor: pointer;
-}
-
-.post .star .material-icons:HOVER {
-  opacity: 0.6;
-}
-
-.post .star .starred {
-  display: none;
-}
-
 .post .message-text {
   line-height: 1.5;
   white-space: pre-wrap;

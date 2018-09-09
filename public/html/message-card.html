@@ -1,11 +1,15 @@
 <div class="row">
   <!--<div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>-->
   <div class="col">
+    <button type="button" class="close" aria-label="Close" ng-click="deletePostClicked(item, retroId)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
     <h5>{{item.username}}</h5>
     <p>{{item.text}}</p>
-    <a href="" class="btn btn-primary" ng-click="deletePostClicked(item, retroId)">Delete</a>
-    <div class="not-starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == false"> star_border </div>
-    <div class="starred material-icons" ng-click="onStarClicked(item)" ng-if="item.starred == true"> star </div>
-    <div class="star-count"> {{item.starCount}} </div>
+    
+    <span class="fa fa-star-o" ng-click="onStarClicked(item)" ng-if="item.starred == false"> </span>
+    <span class="fa fa-star" ng-click="onStarClicked(item)" ng-if="item.starred == true">  </span>
+    <span class="star-count"> {{item.starCount}} </span>
   </div>
 </div>
