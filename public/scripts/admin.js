@@ -71,11 +71,12 @@ angular.module('retroman')
       $scope.showRetroList = true;
       $scope.retroName = "";
       
-      $scope.alertmessages.unshift({content: "Retro created successfully", type: "success"});
-      
-      $timeout(function() {
-        $scope.alertmessages = [];
-      }, 3000);
+      var alertmsg = {content: "Retro created successfully", type: "success"};
+      $scope.alertmessages.unshift(alertmsg);
+       
+       $timeout(function() {
+        $scope.alertmessages.splice($scope.alertmessages.indexOf(alertmsg), 1);
+       }, 3000);       
     }
     
     $scope.getRetroTypeName = function(retroTypeId) {
@@ -112,12 +113,12 @@ angular.module('retroman')
       console.debug("Deleting retro now");
       retrodb.deleteRetro(retro);      
       
-      $scope.alertmessages.unshift({content: "Retro deleted", type: "danger"});
-      
-      $timeout(function() {
-        $scope.alertmessages = [];
-      }, 3000);
+      var alertmsg = {content: "Retro deleted successfully", type: "danger"};
+      $scope.alertmessages.unshift(alertmsg);
 
+      $timeout(function() {
+       $scope.alertmessages.splice($scope.alertmessages.indexOf(alertmsg), 1);
+      }, 3000);
     }
 
     $scope.backClicked = function() {
