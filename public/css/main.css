@@ -7,24 +7,6 @@ a {
   text-decoration: underline;
   color: #039BE5;
 }
-.mdl-card {
-  display: block;
-  width: 100%;
-}
-.mdl-textfield {
-  width: 100%;
-}
-
-.mdl-layout__content {
-  display: block;
-}
-
-/* Fixes an MDL bug where the header does not scroll on small devices */
-.mdl-layout__container .mdl-layout--fixed-header .mdl-layout__content {
-  overflow-y: visible;
-  overflow-x: visible;
-  overflow: visible;
-}
 
 /* Header */
 
@@ -48,22 +30,6 @@ a {
   color: white;
 }
 
-.header .mdl-layout__header-row {
-  max-width: 1024px;
-  width: 100%;
-  padding: 10px 20px;
-  position: relative;
-}
-
-@media screen and (max-width: 479px) {
-  .mdl-grid {
-    padding: 0;
-  }
-  .mdl-card {
-    font-size: 14px;
-  }
-}
-
 /* Signed-in user */
 
 #sign-in-button {
@@ -82,13 +48,6 @@ a {
   right: 150px;
   min-width: initial;
   position: absolute;
-}
-.mdl-button .material-icons {
-  margin-top: -2px;
-}
-.mdl-button.mdl-button--icon .material-icons,
-.mdl-button.mdl-button--fab .material-icons {
-  margin-top: 0;
 }
 
 /* Splash Page */
@@ -281,17 +240,6 @@ a {
   position: absolute;
   right: 0px;
   font-size: 3vw;
-}
-
-md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active md-icon, md-tabs.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active md-icon, md-tabs.md-default-theme.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-focused, md-tabs.md-default-theme.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-focused md-icon {
-  background: #1088c1 !important;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
-
-md-tabs md-ink-bar {
-  color: #1088c1;
-  background-color: #1088c1;
 }
 
 li.ng-enter {
