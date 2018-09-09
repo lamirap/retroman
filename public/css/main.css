@@ -8,28 +8,6 @@ a {
   color: #039BE5;
 }
 
-/* Header */
-
-.logo {
-  font-family: 'Amaranth', sans-serif;
-  text-decoration: none;
-}
-
-.logo .material-icons {
-  top: 4px;
-  font-size: 32px;
-  margin-right: -2px;
-  position: relative;
-}
-
-.logo h3 {
-  background: url('/images/logo.png') no-repeat;
-  background-size: 40px;
-  padding-left: 50px;
-  margin: 10px;
-  color: white;
-}
-
 /* Signed-in user */
 
 #sign-in-button {
