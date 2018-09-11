@@ -9,6 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RETROMAN</title>
 
+  <link rel="stylesheet" href="css/main.css">
+
   <!-- Bootstrap 4 style sheet -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -38,7 +40,7 @@
 <body ng-app="retroman">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">RETROMAN</a>
+  <a class="navbar-brand" href="#"><img src="/images/retromanlogo.png"> <span class="retro-font ml-2">RETROMAN</span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -52,7 +54,7 @@
         <a class="nav-link" ng-href="/" ng-show="showAdmin">Join a Retro</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" ng-href="#!/logout">Logout</a>
+        <a class="nav-link" ng-href="#!/logout" ng-show="showAdmin">Logout</a>
       </li>
     </ul>
   </div>
