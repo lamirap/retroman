@@ -28,7 +28,7 @@ myAPP.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'html/404.html'
         }).
         otherwise({
-            redirectTo: '/home'
+            redirectTo: '/logout'
         });
 }]);
 
