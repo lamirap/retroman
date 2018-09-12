@@ -50,7 +50,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="nav navbar-nav mr-auto">
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item active">
+          <a class="nav-link" ng-href="#" ng-show="!showAdmin" ng-click="signInClicked()">Login</a>
+        </li>
         <li class="nav-item active">
           <a class="nav-link" ng-href="#!/admin" ng-show="showAdmin">My Retros</a>
         </li>

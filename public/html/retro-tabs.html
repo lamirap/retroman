@@ -1,9 +1,12 @@
 <div class="container" ng-show="showRecentPosts">
-  <div class="row my-4">
-    <div class="col-9">
-      <h1>{{retroName}}</h1>
+  <div class="row my-4 text-center">
+    <div class="col">
+      <h1><b>{{retroName}}</b></h1>
+      <h6 class="text-info text-center text-uppercase"><b>{{currentRetroType.name}}</b></h6>
     </div>
-    <div class="col-3">
+  </div>
+  <div class="row my-4">
+    <div class="col">
       <select class="custom-select" ng-model="sortBy" ng-change="sortByChanged(sortBy)">
         <option value="0" selected>View by latest post</option>
         <option value="1">View by most popular</option>
@@ -17,18 +20,23 @@
     <div class="col">
       <div ng-if="includeMobileTemplate">
         <div class="tabbable tabs-below">
-          <ul class="nav nav-tabs nav-justified">
+          <ul class="nav nav-tabs nav-justified mb-2">
             <li class="nav-item" ng-repeat="(fieldId, name) in currentRetroType.fields" ng-class="getTabClass(fieldId)" ng-click="setActiveTab(fieldId)">
-              <a class="nav-link" data-toggle="tab" data-target="#tab-{{fieldId}}">{{name}}</a>
+              <a class="nav-link" data-toggle="tab" data-target="#tab-{{fieldId}}">
+                <i class="fas fa-smile-beam" ng-if="name == 'Glad'"></i>
+                <i class="fas fa-frown" ng-if="name == 'Sad'"></i>
+                <i class="fas fa-angry" ng-if="name == 'Mad'"></i>
+                {{name}}
+              </a>
             </li>
           </ul>
           
           <div class="tab-content">
             <div ng-repeat="(fieldId, name) in currentRetroType.fields" id="tab-{{fieldId}}" ng-class="getTabPaneClass(fieldId)"> 
-              <button class="btn btn-primary" ng-click="addPostClicked(fieldId)">
-                New Post
+              <button class="btn btn-primary btn-lg btn-block" ng-click="addPostClicked(fieldId)">
+                <b>Add New Post</b>
               </button>
-              <ul class="list-group">
+              <ul class="list-group mt-4">
                 <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
                   <message-card item="item"></message-card>
                 </li>
@@ -41,9 +49,14 @@
         <div class="row">
           <div class="col" ng-repeat="(fieldId, name) in currentRetroType.fields">
             <div class="addpost mb-3">
-              <h4 class="text-info text-center my-3">{{name}}</h4>
+              <h5 class="text-center text-uppercase my-3" ng-if="currentRetroType.name =='Sentiments'">
+                <i class="fas fa-smile-beam" ng-if="name == 'Glad'"></i>
+                <i class="fas fa-frown" ng-if="name == 'Sad'"></i>
+                <i class="fas fa-angry" ng-if="name == 'Mad'"></i>
+                {{name}}
+              </h5>
               <button class="btn btn-primary btn-lg btn-block" ng-click="addPostClicked(fieldId)">
-                Add Post
+                <b>Add New Post</b>
               </button>
             </div>
             <ul class="list-group">

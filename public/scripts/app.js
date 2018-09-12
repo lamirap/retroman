@@ -34,4 +34,9 @@ myAPP.config(['$routeProvider', function ($routeProvider) {
 
 myAPP.run(function($rootScope) {
     $rootScope.showAdmin = false;
+
+    $rootScope.signInClicked = function() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider);
+    }
 });
