@@ -5,16 +5,16 @@
 <div class="container" ng-show="showRetroList">
   <div class="row">
     <div class="col">
-      <button type="button" class="btn btn-info btn-lg btn-block mb-3 mt-3" id="anon-sign-in-button" ng-click="addRetroClicked()">
+      <button type="button" class="btn btn-primary btn-lg btn-block mb-3 mt-3" id="anon-sign-in-button" ng-click="addRetroClicked()">
         <b>Add New Retro</b>
       </button>
     </div>
   </div>
 </div>
 
-<div class="container-fluid" ng-show="showRetroList">
+<div class="container" ng-show="showRetroList">
   <div class="row text-center">
-    <div class="col">
+    <div class="col mb-4">
       <div ng-repeat="retro in retroList" style="display: inline-block">
         <retro-card retro="retro"></retro-card>
       </div>
@@ -34,7 +34,7 @@
           </select>
         </div>
         <button class="btn btn-secondary btn-lg" ng-click="backClicked()">Back</button>
-        <button class="btn btn-info btn-lg" type="submit" ng-click="createRetro()" ng-disabled="retrocreateform.$invalid">Submit</button>
+        <button class="btn btn-primary btn-lg" type="submit" ng-click="createRetro()" ng-disabled="retrocreateform.$invalid">Submit</button>
       </form>
     </div>
   </div>

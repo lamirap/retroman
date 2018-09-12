@@ -1,4 +1,4 @@
-<div class="container-fluid" ng-show="showRecentPosts">
+<div class="container" ng-show="showRecentPosts">
   <div class="row my-4">
     <div class="col-9">
       <h1>{{retroName}}</h1>
@@ -12,8 +12,7 @@
   </div>
 </div>
 
-<div class="container-fluid" ng-show="showRecentPosts">
-
+<div class="container" ng-show="showRecentPosts">
   <div class="row">
     <div class="col">
       <div ng-if="includeMobileTemplate">
@@ -43,13 +42,13 @@
           <div class="col" ng-repeat="(fieldId, name) in currentRetroType.fields">
             <div class="addpost mb-3">
               <h4 class="text-info text-center my-3">{{name}}</h4>
-              <button class="btn btn-info btn-lg btn-block" ng-click="addPostClicked(fieldId)">
+              <button class="btn btn-primary btn-lg btn-block" ng-click="addPostClicked(fieldId)">
                 Add Post
               </button>
             </div>
             <ul class="list-group">
               <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
-                <message-card item="item"></message-card>
+                <message-card item="item text-light"></message-card>
               </li>
             </ul>
           </div>

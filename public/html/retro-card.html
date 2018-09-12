@@ -1,4 +1,4 @@
-<div class="card mx-1 my-1" style="width: 15rem;">
+<div class="card mx-1 my-1" style="width: 16.5rem;">
   <div class="mx-auto mt-3">
     <div id="retro-qrcode"></div>
   </div>
@@ -6,7 +6,13 @@
     <h4 class="card-title text-info"><b>{{retro.name}}</b></h4>
     <small class="card-text">{{ getRetroTypeName(retro.retroTypeId) }}</small>
     <p><span class="badge badge-dark">{{retro.retroId}}</span></p>
-    <a class="btn btn-info" ng-href="/#!/home/{{retro.retroId}}">Enter Retro</a>
-    <button class="btn btn-secondary" ng-click="deleteRetroClicked(retro)">Delete</button>
+    <div class="row">
+      <div class="col-6">
+        <a class="btn btn-secondary btn-block" ng-href="" ng-click="deleteRetroClicked(retro)"><i class="fas fa-trash-alt"></i></a>
+      </div>
+      <div class="col-6">
+        <a class="btn btn-info btn-block" ng-href="/#!/home/{{retro.retroId}}"><i class="fas fa-sign-in-alt"></i></a>
+      </div>
+    </div>
   </div>
 </div>

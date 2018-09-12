@@ -119,6 +119,29 @@ button {
     box-shadow: 0 0 0 0.2rem rgba(54, 176, 48, 0.5);
 }
 
+.btn-secondary {
+    color: #fff !important;
+    background-color: #757575;
+    border-color: #757575; }
+.btn-secondary:hover {
+    color: #fff;
+    background-color: #626262;
+    border-color: #5c5c5c; }
+.btn-secondary:focus, .btn-secondary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(117, 117, 117, 0.5); }
+.btn-secondary.disabled, .btn-secondary:disabled {
+    color: #fff;
+    background-color: #757575;
+    border-color: #757575; }
+.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
+.show > .btn-secondary.dropdown-toggle {
+    color: #fff;
+    background-color: #5c5c5c;
+    border-color: #555555; }
+.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(117, 117, 117, 0.5); }
+
 .btn-info {
     color: #fff !important;
     background-color: #5caee0;
@@ -151,7 +174,9 @@ button {
     box-shadow: 0 0 0 0.2rem rgba(92, 174, 224, 0.5);
 }
 
-.btn-primary:hover, .btn-info:hover, .btn-primary:focus, .btn-info:focus, .btn-primary:active, .btn-info:active {
+.btn-primary:hover, .btn-secondary:hover, .btn-info:hover,
+.btn-primary:focus, .btn-secondary:focus, .btn-info:focus,
+.btn-primary:active, .btn-secondary:active, .btn-info:active {
     outline: none;
     box-shadow: none;
     color: #fff !important;
@@ -161,11 +186,15 @@ button {
     background-color: #36b030;
 }
 
+.btn-secondary::before {
+    background-color: #757575; }
+
 .btn-info::before {
     background-color: #5caee0;
 }
 
-.btn-primary::before, .btn-info::before, .btn-primary::after, .btn-info::after {
+.btn-primary::before, .btn-secondary::before, .btn-info::before,
+.btn-primary::after, .btn-secondary::after, .btn-info::after {
     position: absolute;
     pointer-events: none;
     top: 0;
@@ -177,17 +206,19 @@ button {
     transition: 0.7s cubic-bezier(0, 0.8, 0.26, 0.99);
 }
 
-.btn-primary::before, .btn-info::before {
+.btn-primary::before, .btn-secondary::before, .btn-info::before {
     box-shadow: 0 -4px rgba(0, 0, 0, 0.3) inset, 0 4px rgba(255, 255, 255, 0.5) inset, -4px 0 rgba(255, 255, 255, 0.5) inset, 4px 0 rgba(0, 0, 0, 0.3) inset;
     z-index: -1;
 }
 
-.btn-primary:hover::before, .btn-info:hover::before, .btn-primary:focus::before, .btn-info:focus::before, .btn-primary:active::before, .btn-info:active::before {
+.btn-primary:hover::before, .btn-secondary:hover::before, .btn-info:hover::before,
+.btn-primary:focus::before, .btn-secondary:focus::before, .btn-info:focus::before,
+.btn-primary:active::before, .btn-secondary:active::before, .btn-info:active::before {
     background-color: #313131;
     box-shadow: 0 -4px rgba(0, 0, 0, 0.5) inset, 0 4px rgba(255, 255, 255, 0.2) inset, -4px 0 rgba(255, 255, 255, 0.2) inset, 4px 0 rgba(0, 0, 0, 0.5) inset;
 }
 
-.btn-primary::after, .btn-info::after {
+.btn-primary::after, .btn-secondary::after, .btn-info::after {
     box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.15);
 }
 
