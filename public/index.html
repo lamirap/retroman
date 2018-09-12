@@ -9,10 +9,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RETROMAN</title>
 
-  <link rel="stylesheet" href="css/main.css">
 
-  <!-- Bootstrap 4 style sheet -->
+
+  <!-- Bootstrap 4 and Font Awesome style sheets -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Custom adjustments for pixel art -->
+  <link rel="stylesheet" href="css/main.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -39,28 +43,35 @@
 
 <body ng-app="retroman">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><img src="/images/retromanlogo.png"> <span class="retro-font ml-2">RETROMAN</span></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" ng-href="#!/admin" ng-show="showAdmin">My Retros</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" ng-href="/" ng-show="showAdmin">Join a Retro</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" ng-href="#!/logout" ng-show="showAdmin">Logout</a>
-      </li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#"><img src="/images/retromanlogo.png"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" ng-href="#!/admin" ng-show="showAdmin">My Retros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" ng-href="/" ng-show="showAdmin">Join a Retro</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" ng-href="#!/logout" ng-show="showAdmin">Logout</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
 <div ng-view></div>
+
+<footer class="footer bg-dark">
+  <div class="container">
+    <span class="text-muted"><b>Retroman</b> by <a href="https://github.com/lamirap" target="_blank">Parimal Aswani</a>. Source code licensed <a href="https://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.</span>
+  </div>
+</footer>
 
 <!-- Import and configure the Firebase SDK -->
 <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
@@ -74,8 +85,6 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </body>
 </html>
