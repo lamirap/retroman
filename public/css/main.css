@@ -273,3 +273,11 @@ li.ng-leave {
 li.ng-leave-active {
   opacity: 0;
 }
+
+.close {
+  display: none;    
+}
+ 
+.message-card:hover .close {
+  display: block;
+}
