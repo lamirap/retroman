@@ -28,10 +28,10 @@
       <form id="message-form" name="msgform">
         <div class="form-group">
           <h4 class="text-info my-3">Add New Post</h4>
-          <input class="form-control form-control-lg mb-3" rows="3" id="new-post-message" name="messageInput" ng-model="messageInput" placeholder="Post message ..." ng-minlength=20 ng-maxlength=1024>
+          <input class="form-control form-control-lg mb-3" rows="3" id="new-post-message" name="messageInput" ng-model="messageInput" placeholder="Post message ..." ng-minlength=10 ng-maxlength=1024>
           <div class="mb-3" ng-show="msgform.messageInput.$dirty && msgform.messageInput.$invalid">
             <small ng-show="msgform.messageInput.$error.minlength">
-              Post must be at least 20 characters
+              Post must be at least 10 characters
             </small>
             <small ng-show="msgform.messageInput.$error.maxlength">
               Post should be max 1024 characters
