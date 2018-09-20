@@ -132,7 +132,7 @@ angular.module('retroman')
               } else {
                 for (var i = 0; i < $scope.postList.length; i += 1) {
                   if($scope.postList[i].starCount < post.starCount) {
-                    console.log("Inserting at ", i);
+                    //console.log("Inserting at ", i);
                     $scope.postList.splice(i, 0, post);
                     return;
                   }
@@ -145,7 +145,7 @@ angular.module('retroman')
       });
       
       recentPostsRef.on('child_changed', function(data) {	
-        console.debug('Child changed');
+        //console.debug('Child changed');
         
         var postIndex = $scope.postList.findIndex(x => x.postId == data.key);
         
