@@ -20,12 +20,16 @@
     <div class="col">
       <div ng-if="includeMobileTemplate">
         <div class="tabbable tabs-below">
-          <ul class="nav nav-tabs nav-justified mb-2">
+
+          <ul class="nav nav-tabs nav-justified mb-2" ng-if="currentRetroType.name =='Sentiments' || currentRetroType.name =='Restrospective'">
             <li class="nav-item" ng-repeat="(fieldId, name) in currentRetroType.fields" ng-class="getTabClass(fieldId)" ng-click="setActiveTab(fieldId)">
               <a class="nav-link" data-toggle="tab" data-target="#tab-{{fieldId}}">
                 <i class="fas fa-smile-beam" ng-if="name == 'Glad'"></i>
                 <i class="fas fa-frown" ng-if="name == 'Sad'"></i>
                 <i class="fas fa-angry" ng-if="name == 'Mad'"></i>
+                <i class="fas fa-play-circle" ng-if="name == 'Start doing'"></i>
+                <i class="fas fa-stop-circle" ng-if="name == 'Stop doing'"></i>
+                <i class="fas fa-sync-alt" ng-if="name == 'Continue doing'"></i>
                 {{name}}
               </a>
             </li>
@@ -34,10 +38,10 @@
           <div class="tab-content">
             <div ng-repeat="(fieldId, name) in currentRetroType.fields" id="tab-{{fieldId}}" ng-class="getTabPaneClass(fieldId)"> 
               <button class="btn btn-primary btn-lg btn-block" ng-click="addPostClicked(fieldId)">
-                <b>Add New Post</b>
+                <b>Add Post</b>
               </button>
               <ul class="list-group mt-4">
-                <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
+                <li class="list-group-item my-1" ng-repeat="item in postList" ng-if="item.type == fieldId">
                   <message-card item="item"></message-card>
                 </li>
               </ul>
@@ -55,12 +59,18 @@
                 <i class="fas fa-angry" ng-if="name == 'Mad'"></i>
                 {{name}}
               </h5>
+              <h5 class="text-center text-uppercase my-3" ng-if="currentRetroType.name =='Restrospective'">
+                <i class="fas fa-play-circle" ng-if="name == 'Start doing'"></i>
+                <i class="fas fa-stop-circle" ng-if="name == 'Stop doing'"></i>
+                <i class="fas fa-sync-alt" ng-if="name == 'Continue doing'"></i>
+                {{name}}
+              </h5>
               <button class="btn btn-primary btn-lg btn-block" ng-click="addPostClicked(fieldId)">
-                <b>Add New Post</b>
+                <b>Add Post</b>
               </button>
             </div>
             <ul class="list-group">
-              <li class="list-group-item" ng-repeat="item in postList" ng-if="item.type == fieldId">
+              <li class="list-group-item my-1" ng-repeat="item in postList" ng-if="item.type == fieldId">
                 <message-card item="item text-light"></message-card>
               </li>
             </ul>

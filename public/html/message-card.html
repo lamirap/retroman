@@ -1,12 +1,12 @@
 <div class="row">
-  <!--<div class="avatar" ng-style="{'background-image':'url({{item.avatarURL}})'}"></div>-->
+  <img src="{{item.avatarURL}}" class="avatar">
   <div class="col">
     <button type="button" class="close" aria-label="Close" ng-click="deletePostClicked(item, retroId)">
       <span aria-hidden="true">&times;</span>
     </button>
 
-    <h5>{{item.username}}</h5>
-    <p class="text-secondary">{{item.text}}</p>
+    <small>{{item.username}}</small>
+    <h5 class="text-secondary">{{item.text}}</h5>
     
     <span class="far fa-star" ng-click="onStarClicked(item)" ng-if="item.starred == false"></span>
     <span class="fas fa-star text-warning" ng-click="onStarClicked(item)" ng-if="item.starred == true"></span>
