@@ -78,11 +78,8 @@ angular.module('retroman')
                   
       var recentPostsRef;
       
-      if ($scope.sortBy == "0") {
-        recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
-      } else {
-        recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('starCount').limitToLast(100);
-      }
+      recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('date').limitToLast(100);
+      //recentPostsRef = firebase.database().ref('/posts/' + $scope.retroId +'/').orderByChild('starCount').limitToLast(100);
       
       // Fetching and displaying all posts of each sections.
       recentPostsRef.on('child_added', function(data) {
@@ -123,24 +120,46 @@ angular.module('retroman')
           retrodb.toggleStar($scope.retroId, post);
         };
         
-        $timeout(function() {
-          $scope.postList.unshift(post);
-        }, 0);
+        if ($scope.sortBy == "0") {
+            $timeout(function() {        
+              $scope.postList.unshift(post);
+            }, 0);
+        } else {
+            console.log("Sorted by votes");
+            $timeout(function() {       
+              if ($scope.postList.length == 0) {
+                $scope.postList.unshift(post);
+              } else {
+                for (var i = 0; i < $scope.postList.length; i += 1) {
+                  if($scope.postList[i].starCount < post.starCount) {
+                    console.log("Inserting at ", i);
+                    $scope.postList.splice(i, 0, post);
+                    return;
+                  }
+                }
+                $scope.postList.push(post);
+              }
+            }, 0);
+        }
         //console.debug(post);        
       });
       
       recentPostsRef.on('child_changed', function(data) {	
-        //console.debug('Child changed');
+        console.debug('Child changed');
+        
         var postIndex = $scope.postList.findIndex(x => x.postId == data.key);
         
         //console.debug(postIndex);
-        
-        $timeout(function() {        
+        $timeout(function() {
           $scope.postList[postIndex].username = data.val().author || 'Anonymous';
           $scope.postList[postIndex].text = data.val().body;
           //$scope.postList[postIndex].starred = data.val().starred;
           $scope.postList[postIndex].starCount = data.val().starCount;
-        }, 0);
+          
+          if ($scope.sortBy == "1") {
+            $scope.postList.sort((a,b) => (a.starCount > b.starCount) ? -1 : ((b.starCount > a.starCount) ? 1 : 0)); 
+          } 
+        }, 0);        
       });
       
       recentPostsRef.on('child_removed', function(data) {
