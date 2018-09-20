@@ -21,7 +21,7 @@ angular.module('retroman')
 
         $scope.onAuthStateChangedLogin = function(user) { 
           console.debug('Login Auth state changed login');
-          //console.debug(user);
+          console.debug(user);
 
           if (user) {
             $rootScope.showAdmin = !user.isAnonymous;
@@ -39,9 +39,10 @@ angular.module('retroman')
             }, 0);            
           } else {
             //console.debug('Redirecting to login');
-            $timeout(function() {
-              $location.path("/login"); 
-            }, 0); 
+            //$timeout(function() {
+            //  $location.path("/login"); 
+            //}, 0);
+            $scope.anonSignInClicked(); 
           }
         }
         
