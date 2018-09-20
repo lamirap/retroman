@@ -234,7 +234,17 @@ angular.module('retroman')
         $rootScope.referrer = $location.path();
         // Display the splash page where you can sign-in.
         //console.debug('Redirecting to login');
-        $location.path("/login");
+        
+        firebase.auth().signInAnonymously().catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          
+          console.debug(errorMessage);
+          // ...
+        });
+        
+        //$location.path("/login");
         $scope.$apply();
       }
     }
