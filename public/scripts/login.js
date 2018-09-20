@@ -39,10 +39,10 @@ angular.module('retroman')
             }, 0);            
           } else {
             //console.debug('Redirecting to login');
-            //$timeout(function() {
-            //  $location.path("/login"); 
-            //}, 0);
-            $scope.anonSignInClicked(); 
+            $timeout(function() {
+              $location.path("/login"); 
+            }, 0);
+            //$scope.anonSignInClicked(); 
           }
         }
         
