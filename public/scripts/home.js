@@ -26,6 +26,19 @@ angular.module('retroman')
         }, 0);
 
       } else {
+        if (firebase.auth().currentUser == null) {
+          console.log("Signing in anonymously");
+          
+          firebase.auth().signInAnonymously().catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            
+            console.debug(errorMessage);
+            // ...
+          });
+        }
+        
         firebase.database().ref('/retros/' + $scope.retroId).once('value').then(function(snapshot) {
           if (!snapshot.exists()) {
 
