@@ -10,12 +10,10 @@ angular.module('retroman')
         $scope.anonSignInClicked = function() {
           console.debug('Anon sign-in clicked');
           firebase.auth().signInAnonymously().catch(function(error) {
-            // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             
             console.debug(errorMessage);
-            // ...
           });
         }
 
@@ -25,7 +23,7 @@ angular.module('retroman')
 
           if (user) {
             $rootScope.showAdmin = !user.isAnonymous;
-            console.log($rootScope.referrer);
+            //console.log($rootScope.referrer);
             $timeout(function() {
               if ($rootScope.referrer) {
                 $location.path( $rootScope.referrer );  
