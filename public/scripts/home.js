@@ -7,13 +7,45 @@ angular.module('retroman')
     $scope.retroTypes = [];
     $scope.sortBy = "0";
     
-    retrodb.getRetroTypes(function(retroType) {
-      //console.log("New retro type called", retroType);
-      $timeout(function() {
-        $scope.retroTypes.unshift(retroType);
-      }, 0);
-    });
+    function loadRetros() {
+      retrodb.getRetroTypes(function(retroType) {
+        //console.log("New retro type called", retroType);
+        $timeout(function() {
+          $scope.retroTypes.unshift(retroType);
+        }, 0);
+        
+        getRetros();
+      });
+    }
     
+    function getRetros() {
+      firebase.database().ref('/retros/' + $scope.retroId).once('value').then(function(snapshot) {
+        if (!snapshot.exists()) {
+          $timeout(function() {
+              $('#RetroNotFoundModal').modal('show');
+              $scope.showRetroSelector = true;
+              $scope.showRecentPosts = false;
+          }, 0);            
+        } else {
+          console.debug('Retro found', snapshot.val().name, snapshot.val().retroTypeId);
+          $timeout(function() {
+            $scope.retroName = snapshot.val().name;
+            var retroTypeId = snapshot.val().retroTypeId;
+            
+            for(var i = 0; i < $scope.retroTypes.length; i += 1) {
+              if($scope.retroTypes[i].retroTypeId === retroTypeId) {
+                  $scope.currentRetroType = $scope.retroTypes[i];
+                  break;
+              }
+            }
+          }, 0);
+        }
+      }, function(error) {
+        // The Promise was rejected.
+        console.error(error);
+      });
+    }
+
     $scope.$on('$routeChangeSuccess', function() {
       $scope.retroId = $routeParams.retroId;
       //console.debug($scope.retroId);
@@ -29,45 +61,20 @@ angular.module('retroman')
         if (firebase.auth().currentUser == null) {
           console.log("Signing in anonymously");
           
-          firebase.auth().signInAnonymously().catch(function(error) {
-            // Handle Errors here.
+          firebase.auth().signInAnonymously().then(function() {
+            console.log("Sign in successful");
+            loadRetros();
+          }).catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
             
             console.debug(errorMessage);
-            // ...
           });
+          
+        } else {
+          loadRetros();
         }
-        
-        firebase.database().ref('/retros/' + $scope.retroId).once('value').then(function(snapshot) {
-          if (!snapshot.exists()) {
-
-              $timeout(function() {
-                  $('#RetroNotFoundModal').modal('show');
-                  $scope.showRetroSelector = true;
-                  $scope.showRecentPosts = false;
-              }, 0);
-              
-          } else {
-            console.debug('Retro found', snapshot.val().name, snapshot.val().retroTypeId);
-            $timeout(function() {
-              $scope.retroName = snapshot.val().name;
-              var retroTypeId = snapshot.val().retroTypeId;
-              
-              for(var i = 0; i < $scope.retroTypes.length; i += 1) {
-                if($scope.retroTypes[i].retroTypeId === retroTypeId) {
-                    $scope.currentRetroType = $scope.retroTypes[i];
-                    break;
-                }
-              }
-            }, 0);
-          }
-        }, function(error) {
-          // The Promise was rejected.
-          console.error(error);
-        });
       }
-      
     });
     
   
