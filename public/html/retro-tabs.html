@@ -23,7 +23,7 @@
 
           <ul class="nav nav-tabs nav-justified mb-2" ng-if="currentRetroType.name =='Sentiments' || currentRetroType.name =='Restrospective'">
             <li class="nav-item" ng-repeat="(fieldId, name) in currentRetroType.fields" ng-class="getTabClass(fieldId)" ng-click="setActiveTab(fieldId)">
-              <a class="nav-link" data-toggle="tab" data-target="#tab-{{fieldId}}">
+              <a class="nav-link" ng-class="getTabClass(fieldId)" data-toggle="tab" data-target="#tab-{{fieldId}}">
                 <i class="fas fa-smile-beam" ng-if="name == 'Glad'"></i>
                 <i class="fas fa-frown" ng-if="name == 'Sad'"></i>
                 <i class="fas fa-angry" ng-if="name == 'Mad'"></i>
