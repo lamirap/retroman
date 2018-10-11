@@ -28,9 +28,8 @@ angular.module('retroman')
               if ($rootScope.referrer) {
                 $location.path( $rootScope.referrer );  
               } else {
-                if (user.isAnonymous) {
-                  $location.path( '/home' ); 
-                } else {
+                //console.log("Here", user.isAnonymous);
+                if (!user.isAnonymous) {
                   $location.path( '/admin' );                   
                 }                 
               }

@@ -54,7 +54,7 @@ angular.module('retroman')
         }
         
         scope.setActiveTab = function (tabNum) {
-          console.log("Set Active Tab ", tabNum);
+          //console.debug("Set Active Tab ", tabNum);
           initTabs();
           tabClasses[tabNum] = "active";
         };
