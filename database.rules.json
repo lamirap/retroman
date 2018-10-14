@@ -2,33 +2,47 @@
   "rules": {
     "posts": {
       ".read": "auth != null",
- 		  ".write": "auth != null",
       "$retroId": {
-        ".indexOn": ["date", "starCount"]
+        ".indexOn": ["date", "starCount"],
+	      ".write": "(auth != null) && ((auth.provider != 'anonymous') || !data.exists())",
+	      "$postKey": {
+		 		  ".write": "(auth != null) && ((auth.provider != 'anonymous') || !data.exists())"
+        }
+      }
+    },
+    "user-posts": {
+      ".read": "auth != null",
+      "$retroId": {
+        ".write": "(auth != null) && ((auth.provider != 'anonymous') || !data.exists())",
+        "$uid": {
+          "$postKey": {
+			 		  ".write": "(auth != null) && ((auth.provider != 'anonymous') || !data.exists())",
+        	}
+        }
       }
     },
     "retros": {
       ".read": "auth != null",
- 		  ".write": "auth != null"
-    },
-    "user-posts": {
-      ".read": "auth != null",
- 		  ".write": "auth != null"
+      "$retroId": {
+ 		  	".write": "(auth != null) && (auth.provider != 'anonymous')"
+      }
     },
     "user-retros": {
       "$uid": {
-        ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth != null && auth.uid == $uid"
+        ".read": "(auth != null) && (auth.uid == $uid) && (auth.provider != 'anonymous')",
+          "$retroKey": {
+		        ".write": "(auth != null) && (auth.uid == $uid) && (auth.provider != 'anonymous')"
+          }
       }
     },
     "retro-types": {
       ".read": "auth != null",
- 		  ".write": "auth != null"
+ 		  ".write": "(auth != null) && ((auth.provider != 'anonymous') || !data.exists())",
     },
     "users": {
       "$uid": {
-        ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth != null && auth.uid == $uid"
+        ".read": "(auth != null) && (auth.uid == $uid)",
+        ".write": "(auth != null) && (auth.uid == $uid)"
       }
     }
   }
